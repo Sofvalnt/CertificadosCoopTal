@@ -17,6 +17,7 @@
             <x-authentication-card-logo />
         </x-slot>
 
+        <h1 align= "center" class="mt-8 text-2xl font-medium text-gray-900">Crear una nueva cuenta</h1>
 
         <x-validation-errors class="mb-4" />
 

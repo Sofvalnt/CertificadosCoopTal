@@ -8,9 +8,17 @@
         <div class="card rounded-3 text-black">
           <div class="row g-0">
             <div class="col-lg-6">
-              <div class="card-body p-md-5 mx-md-4">         
-            
-     </nav>          
+              <div class="card-body p-md-5 mx-md-4">  
+                
+              <x-button class="ms-4">
+                    @if (Route::has('register'))
+                                <a href="{{ route('register') }}">¿No tienes cuenta? Registrate</a>
+                            @endif
+                            </x-button>
+
+         </nav>          
+
+         
 
     <x-authentication-card>
         <x-slot name="logo">
@@ -21,6 +29,10 @@
         </x-slot>
 
         <!-- <x-validation-errors class="mb-4" /> -->
+
+
+        <h1 align= "center" class="mt-8 text-2xl font-medium text-gray-900">Inicio de Sesion </h1>
+
 
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -58,6 +70,7 @@
                 <x-button class="ms-4">
                     {{ __('Iniciar Sesión') }}
                 </x-button>
+              
             </div>
         </form>
     </x-authentication-card>
