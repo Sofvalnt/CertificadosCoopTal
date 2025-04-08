@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +9,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable // Se eliminó "implements MustVerifyEmail"
 {
     use HasApiTokens;
     use HasFactory;
@@ -27,6 +26,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'force_password_change',
+        'is_first_login',
+        'password_changed_at'
     ];
 
     /**
@@ -47,7 +49,9 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime', // Elimina esta línea si quieres
+        'is_first_login' => 'boolean', // Añade esto para tu lógica de primer login
+        'password_changed_at' => 'datetime' // Añade esto si no está
     ];
 
     /**
@@ -58,4 +62,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function adminlte_image()
+    {
+        return url($this->profile_photo_url);
+    }
+
+    public function adminlte_profile_url()
+    {
+        return url('User/Profile');
+    }
+
 }
