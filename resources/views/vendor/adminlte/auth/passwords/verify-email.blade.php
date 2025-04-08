@@ -43,3 +43,5 @@
         </div>
     </x-authentication-card>
 </x-guest-layout>
+
+@extends('adminlte::auth.verify')

@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use App\Http\Middleware\ForcePasswordChange;
 
 class Kernel extends HttpKernel
 {
@@ -23,6 +24,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
+    
     /**
      * The application's route middleware groups.
      *
@@ -65,4 +67,13 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+    
+    protected $routeMiddleware = [
+        // ...
+        'force.password' => \App\Http\Middleware\ForcePasswordChange::class,
+        'force.password.change' => ForcePasswordChange::class, // <-- Sin corchetes
+        'check.role' => \App\Http\Middleware\CheckRole::class,
+];
 }
+
+   
