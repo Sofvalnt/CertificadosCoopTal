@@ -476,6 +476,37 @@
             </a>
         </div>
         
+        <!-- Diploma 5 -->
+        <div class="diploma-item">
+            <div class="imagen-container" 
+                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/reconocimiento.png')); ?>">
+                <img src="<?php echo e(asset('vendor/adminlte/dist/img/reconocimiento.png')); ?>" 
+                     alt="Certificado Reconocimiento" 
+                     class="imagen-preview">
+                <div class="imagen-info">
+                    <div class="imagen-titulo">Certificado Reconocimiento (extenso)</div>
+                </div>
+            </div>
+            <a href="<?php echo e(url('reconocimiento')); ?>" class="boton-link">
+                <i class="fas fa-download"></i> Generar Certificado Reconocimiento(extenso)
+            </a>
+        </div>
+
+        <!-- Diploma 6 -->
+        <div class="diploma-item">
+            <div class="imagen-container" 
+                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/participacion.png')); ?>">
+                <img src="<?php echo e(asset('vendor/adminlte/dist/img/participacion.png')); ?>" 
+                     alt="Certificado para Participantes(extenso)" 
+                     class="imagen-preview">
+                <div class="imagen-info">
+                    <div class="imagen-titulo">Certificado para Participantes(extenso)</div>
+                </div>
+            </div>
+            <a href="<?php echo e(url('participacion')); ?>" class="boton-link">
+                <i class="fas fa-download"></i> Generar Certificado para Participantes(extenso)
+            </a>
+        </div>
         
     </div>
 </div>

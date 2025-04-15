@@ -250,88 +250,115 @@ return [
 
 
     'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => true,
-        ],
-        [
-            'type' => 'fullscreen',
-            'topnav_right' => true,
-        ],
-
-        // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
-        [
-            'text' => 'Principal',
-            'url' => 'dashboard',
-            'icon' => 'far fa-fw fa-file',
-        ],
-        [
-            'text' => 'Generador',
-            'url' => 'generacion',
-            'icon' => 'far fa-fw fa-file',
-        ],
-        [
-            'header' => 'DIPLOMAS'
-        ],
-        
-        [
-            'text' => 'Individual',
-            'submenu' => [
-                [   
-                    'text' => 'Diploma General 1',
-                    'url' => 'generador',
-                    'icon' => 'fas fa-fw fa-file',
-                ],
-                [
-                    'text' => 'Diploma General 2',
-                    'url' => 'general',
-                    'icon' => 'fas fa-fw fa-file',
-                ],
-                [
-                    'text' => 'Comite de Juventud',
-                    'url' => 'juventud',
-                    'icon' => 'fas fa-fw fa-file',
-                ],
-                [
-                    'text' => 'Comite de Genero',
-                    'url' => 'genero',
-                    'icon' => 'fas fa-fw fa-file',
-                ],
-                [
-                    'text' => 'Comite de Educación',
-                    'url' => 'educacion',
-                    'icon' => 'fas fa-fw fa-file',
-                ],
-            ]
-        ],
+    // Navbar items:
     [
-
-        ],
-        
-        [
-            'text' => 'Perfil',
-            'url' => 'perfil',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        
-        [
-        
-                'text' => 'Ir a Classroom',
-                'url' => 'https://classroom.google.com/?pli=1',
-                'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Cerrar Sesión',
-            'url' => 'logout',
-            'icon' => 'far fa-fw fa-lock',
+        'type' => 'navbar-search',
+        'text' => 'search',
+        'topnav_right' => true,
     ],
+    [
+        'type' => 'fullscreen',
+        'topnav_right' => true,
+    ],
+
+    // Sidebar items:
+    [
+        'type' => 'sidebar-menu-search',
+        'text' => 'search',
+    ],
+    [
+        'text' => 'Principal',
+        'url' => 'dashboard',
+        'icon' => 'fa fa-globe',
+    ],
+    [
+        'text' => 'Generador de diplomas',
+        'url' => 'generacion',
+        'icon' => 'fa fa-graduation-cap',
+    ],
+    [
+        'text' => 'Generador de Certificados',
+        'url' => 'generacionCertificados',
+        'icon' => 'fa fa-graduation-cap',
+    ],
+    [
+        'header' => 'DIPLOMAS'
+    ],
+    
+    [
+        'text' => 'Individual',
+        'icon' => 'far fa-fw fa-folder',
+        'submenu' => [
+            [   
+                'text' => 'Para instructores',
+                'url' => 'reconocimiento',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [   
+                'text' => 'Para participantes',
+                'url' => 'participacion',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [   
+                'text' => 'Diploma General 1',
+                'url' => 'generador',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [
+                'text' => 'Diploma General 2',
+                'url' => 'general',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [
+                'text' => 'Comite de Juventud',
+                'url' => 'juventud',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [
+                'text' => 'Comite de Genero',
+                'url' => 'genero',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+            [
+                'text' => 'Comite de Educación',
+                'url' => 'educacion',
+                'icon' => 'fas fa-fw fa-certificate',
+            ],
+        ]
+    ],
+
+    [
+        'header' => 'GENERAL'
+    ],
+
+    [
+        'text' => 'Perfil',
+        'url' => 'perfil',
+        'icon' => 'fas fa-fw fa-user',
+    ],
+    
+    [
+        'text' => 'Ir a Classroom',
+        'url' => 'https://classroom.google.com/?pli=1',
+        'icon' => 'fas fa-fw fa-laptop',
+        'target' => '_blank'
+    ],
+    
+    // Botón de Cerrar Sesión
+    [
+        'text' => 'Cerrar Sesión',
+        'url' => '#', // Prevent default link behavior'text' => 'Cerrar Sesión',
+        'url' => '#',
+        'icon' => 'fas fa-fw fa-sign-out-alt',
+        'class' => 'logout-btn',
+        'topnav_right' => true,
+        'route' => 'logout',
+        'method' => 'POST', // Para Laravel
+        'onclick' => 'event.preventDefault(); document.getElementById("logout-form").submit();',
+
+       ],
 ],
+
     /*
     |--------------------------------------------------------------------------
     | Menu Filters

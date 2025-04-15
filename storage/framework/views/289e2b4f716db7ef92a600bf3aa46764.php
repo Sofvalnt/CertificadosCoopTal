@@ -1,8 +1,23 @@
 <?php $__env->startSection('title', 'Generador de diplomas'); ?>
 
 <?php $__env->startSection('content_header'); ?>
-    <h1><center>Generador de diplomas</h1>
-    <p>A continuacion, puedes descargar tu plantilla y escribir los datos del curso, los nombres de los alumnos con su respetiva nota y se generará automaticamente</p></center>
+<h1><center>Generador de Diplomas General 2</h1>
+    <div class="instrucciones">
+    <p>En esta página puedes generar certificados de reconocimiento para participantes de cursos o talleres.</p>
+    
+    <p><span class="destacado">Instrucciones:</span></p>
+    <ol>
+        <li>Descarga la plantilla en formato CSV haciendo clic en el botón correspondiente.</li>
+        <li><span class="destacado">No modifiques la estructura de la plantilla</span>, ya que es específica para que el sistema pueda leerla correctamente.</li>
+        <li>Completa solo los campos solicitados en el archivo CSV con los datos necesarios.</li>
+        <li>Sube el archivo completado utilizando el botón "Seleccionar archivo".</li>
+        <li>Genera los certificados haciendo clic en el botón correspondiente.</li>
+        <li>Puedes descargar los certificados individualmente o todos juntos en un archivo ZIP.</li>
+        <li>Si deseas realizar un nuevo lote de certificados, haz clic en Refrescar para limpiar los anteriores.</li>
+    </ol>
+</div>
+    
+
 <?php $__env->stopSection(); ?>
 
 
@@ -184,6 +199,17 @@
             background: var(--button-hover);
         }
 
+        .instrucciones {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .destacado {
+            font-weight: bold;
+            color: #e74c3c;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -210,15 +236,7 @@
     </div> 
 </div>
 
-        <div class="diploma-controls">
-            <button onclick="refrescarDiplomas()" class="btn btn-info">
-                <i class="fas fa-sync-alt"></i> Refrescar Diplomas
-            </button>
-            <button onclick="eliminarDiplomas()" class="btn btn-danger">
-                <i class="fas fa-trash-alt"></i> Eliminar Todos
-            </button>
-        </div>
-
+       
 <script>
     let estudiantes = [];
     let metadatos = {

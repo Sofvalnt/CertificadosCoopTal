@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-<<<<<<< HEAD
 return [
     'accepted'             => 'El campo :attribute debe ser aceptado.',
     'accepted_if'          => 'El campo :attribute debe ser aceptado cuando :other sea :value.',
@@ -275,7 +274,6 @@ return [
         'work'                     => 'trabajo',
         'year'                     => 'año',
     ],
-=======
 return [
     'accepted'             => 'El campo :attribute debe ser aceptado.',
     'accepted_if'          => 'El campo :attribute debe ser aceptado cuando :other sea :value.',
@@ -548,5 +546,4 @@ return [
         'work'                     => 'trabajo',
         'year'                     => 'año',
     ],
->>>>>>> 35a042960754fbf6964b47082aa075e639f610b5
 ];

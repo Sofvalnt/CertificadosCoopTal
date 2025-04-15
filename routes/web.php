@@ -81,6 +81,18 @@ Route::middleware([
         return view('generacion');
     })->name('generacion');
 
+    Route::get('/reconocimiento', function () {
+        return view('reconocimiento');
+    })->name('reconocimiento');
+
+    Route::get('/participacion', function () {
+        return view('participacion');
+    })->name('participacion');
+
+    Route::get('/generacionCertificados', function () {
+        return view('generacionCertificados');
+    })->name('generacionCertificados');
+
     // Perfil
     Route::get('/perfil', function () {
         return view('profile.show');
@@ -93,13 +105,7 @@ Route::middleware([
              ->name('ajustes.update-password');
     });
     
-    // Logout
-    Route::post('logout', function (Request $request) {
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
-    })->name('logout');
+    
 });
 
 // Ruta protegida SOLO para IT

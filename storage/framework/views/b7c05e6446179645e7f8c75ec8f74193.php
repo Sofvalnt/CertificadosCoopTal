@@ -20,26 +20,28 @@
 <?php $component->withAttributes([]); ?>
     <div class="profile-container">
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <!-- Menú de navegación del perfil -->
-            <div class="profile-nav">
-                <a href="#personal-info" class="nav-item active" data-section="personal-info">
-                    <i class="fas fa-user mr-2"></i>Información Personal
-                </a>
-                <a href="#security" class="nav-item" data-section="security">
-                    <i class="fas fa-shield-alt mr-2"></i>Seguridad
-                </a>
-                <a href="#sessions" class="nav-item" data-section="sessions">
-                    <i class="fas fa-laptop mr-2"></i>Sesiones
-                </a>
-                <form method="POST" action="<?php echo e(route('logout')); ?>" class="nav-item logout-form">
-                    <?php echo csrf_field(); ?>
-                    <button type="submit" class="logout-btn">
+            <!-- Sidebar horizontal funcional -->
+            <div class="horizontal-sidebar bg-white rounded-lg shadow-md p-4 mb-6 overflow-x-auto">
+                <div class="flex flex-nowrap md:flex-wrap gap-2">
+                    <button class="sidebar-btn active" data-section="personal-info">
+                        <i class="fas fa-user mr-2"></i>Información Personal
+                    </button>
+                    <button class="sidebar-btn" data-section="security">
+                        <i class="fas fa-shield-alt mr-2"></i>Seguridad
+                    </button>
+                    <button class="sidebar-btn" data-section="sessions">
+                        <i class="fas fa-laptop mr-2"></i>Sesiones
+                    </button>
+                    <button type="button" class="sidebar-btn logout-btn ml-auto" onclick="confirmLogout()">
                         <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
                     </button>
-                </form>
+                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                        <?php echo csrf_field(); ?>
+                    </form>
+                </div>
             </div>
 
-            <!-- Tarjeta de Información del Perfil -->
+            <!-- Contenido principal -->
             <div class="profile-card">
                 <!-- Sección de Información Personal -->
                 <div class="profile-section active-section" id="personal-info">
@@ -89,28 +91,6 @@ if (isset($__slots)) unset($__slots);
 ?>
                     </div>
                     <?php endif; ?>
-
-                    <?php if(Laravel\Fortify\Features::canManageTwoFactorAuthentication()): ?>
-                    <div class="security-item">
-                        <h3><i class="fas fa-mobile-alt mr-2"></i>Autenticación de Dos Factores</h3>
-                        <?php
-$__split = function ($name, $params = []) {
-    return [$name, $params];
-};
-[$__name, $__params] = $__split('profile.two-factor-authentication-form');
-
-$__html = app('livewire')->mount($__name, $__params, 'lw-203675925-2', $__slots ?? [], get_defined_vars());
-
-echo $__html;
-
-unset($__html);
-unset($__name);
-unset($__params);
-unset($__split);
-if (isset($__slots)) unset($__slots);
-?>
-                    </div>
-                    <?php endif; ?>
                 </div>
 
                 <!-- Sección de Sesiones -->
@@ -123,7 +103,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('profile.logout-other-browser-sessions-form');
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-203675925-3', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'lw-203675925-2', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -144,7 +124,7 @@ $__split = function ($name, $params = []) {
 };
 [$__name, $__params] = $__split('profile.delete-user-form');
 
-$__html = app('livewire')->mount($__name, $__params, 'lw-203675925-4', $__slots ?? [], get_defined_vars());
+$__html = app('livewire')->mount($__name, $__params, 'lw-203675925-3', $__slots ?? [], get_defined_vars());
 
 echo $__html;
 
@@ -182,50 +162,67 @@ if (isset($__slots)) unset($__slots);
     
     .profile-header {
         padding: 20px 0;
-        background: linear-gradient(135deg, #05846b 25%,rgb(243, 232, 71) 100%);
+        background: linear-gradient(135deg, #05846b 25%, rgb(243, 232, 71) 100%);
         color: white;
         margin-bottom: 30px;
         border-radius: 0 0 10px 10px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
-    .profile-header h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 10px;
+    /* Sidebar horizontal */
+    .horizontal-sidebar {
+        transition: all 0.3s ease;
     }
-
-    /* Menú de navegación */
-    .profile-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 30px;
-        border-bottom: 1px solid #e2e8f0;
-        padding-bottom: 15px;
+    
+    .horizontal-sidebar::-webkit-scrollbar {
+        height: 5px;
     }
-
-    .nav-item:hover, .nav-item.active {
+    
+    .horizontal-sidebar::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 10px;
+    }
+    
+    /* Botones del sidebar */
+    .sidebar-btn {
+        padding: 10px 16px;
+        border-radius: 8px;
+        background-color: #f8fafc;
+        color: #334155;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        font-weight: 500;
+        white-space: nowrap;
+        margin-right: 8px;
+        flex-shrink: 0;
+    }
+    
+    .sidebar-btn:hover {
+        background: #e2e8f0;
+        color: #1e293b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sidebar-btn.active {
         background: #05846b;
         color: white;
-        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
-    .logout-form {
-        margin-left: auto;
+    
+    .sidebar-btn.logout-btn {
+        background-color: #fee2e2;
+        color: #b91c1c;
     }
-
-    .logout-btn {
-        background: none;
-        border: none;
-        color: inherit;
-        font: inherit;
-        cursor: pointer;
-        padding: 0;
-        display: flex;
-        align-items: center;
+    
+    .sidebar-btn.logout-btn:hover {
+        background-color: #fecaca;
+        color: #991b1b;
     }
-
+    
     /* Tarjeta de perfil */
     .profile-card {
         background: white;
@@ -233,31 +230,23 @@ if (isset($__slots)) unset($__slots);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         padding: 30px;
     }
-
+    
     /* Secciones del perfil */
     .profile-section {
         display: none;
         animation: fadeIn 0.5s ease;
     }
-
+    
     .profile-section.active-section {
         display: block;
     }
-
+    
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
     }
-
-    .profile-section h2 {
-        font-size: 1.8rem;
-        color: #2d3748;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Items de seguridad */
+    
+    /* Items de contenido */
     .security-item {
         margin-bottom: 30px;
         padding: 25px;
@@ -266,43 +255,25 @@ if (isset($__slots)) unset($__slots);
         border-left: 4px solid #4299e1;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
     }
-
-    .security-item h3 {
-        font-size: 1.3rem;
-        color: #4a5568;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-    }
-
-    /* Sección de peligro */
+    
     .danger-section {
         background-color: #fff5f5;
         border-left: 4px solid #e53e3e;
     }
-
-    .danger-section h3 {
-        color: #e53e3e;
-    }
-
-    /* Efectos de hover para botones */
-    button:hover {
-        transform: translateY(-1px);
-    }
-
+    
     /* Responsive */
     @media (max-width: 768px) {
         .profile-header h1 {
             font-size: 2rem;
         }
         
-        .profile-nav {
-            flex-direction: column;
+        .sidebar-btn {
+            padding: 8px 12px;
+            font-size: 0.9rem;
         }
         
-        .logout-form {
-            margin-left: 0;
-            margin-top: 10px;
+        .profile-card {
+            padding: 20px;
         }
         
         .security-item {
@@ -313,52 +284,73 @@ if (isset($__slots)) unset($__slots);
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Navegación entre secciones
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.addEventListener('click', function(e) {
-            if(this.classList.contains('logout-form')) return;
-            
-            e.preventDefault();
-            const sectionId = this.getAttribute('data-section');
-            
-            // Actualizar navegación activa
-            document.querySelectorAll('.nav-item').forEach(navItem => {
-                navItem.classList.remove('active');
-            });
-            this.classList.add('active');
-            
-            
-            // Mostrar sección correspondiente
-            document.querySelectorAll('.profile-section').forEach(section => {
-                section.classList.remove('active-section');
-            });
-            document.getElementById(sectionId).classList.add('active-section');
-        });
-    });
-
-    // Efecto de carga inicial
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelector('.profile-section').classList.add('active-section');
-    });
-
-    // Confirmación para cerrar sesión
-    document.querySelector('.logout-form').addEventListener('submit', function(e) {
-        if(!confirm('¿Estás seguro de que deseas cerrar sesión?')) {
-            e.preventDefault();
+        // Controlador de clicks para los botones del sidebar
+        document.querySelectorAll('.sidebar-btn:not(.logout-btn)').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                
+                // Remover clase active de todos los botones
+                document.querySelectorAll('.sidebar-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Añadir clase active al botón clickeado
+                this.classList.add('active');
+                
+                // Ocultar todas las secciones
+                document.querySelectorAll('.profile-section').forEach(section => {
+                    section.classList.remove('active-section');
+                });
+                
+                // Mostrar la sección correspondiente
+                const targetSection = document.getElementById(sectionId);
+                if(targetSection) {
+                    targetSection.classList.add('active-section');
+                    
+                    // Scroll suave a la sección
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Activar la primera sección por defecto
+        if(!document.querySelector('.profile-section.active-section')) {
+            const firstSection = document.querySelector('.profile-section');
+            if(firstSection) firstSection.classList.add('active-section');
+        }
+        
+        // Activar el primer botón por defecto
+        if(!document.querySelector('.sidebar-btn.active')) {
+            const firstBtn = document.querySelector('.sidebar-btn:not(.logout-btn)');
+            if(firstBtn) firstBtn.classList.add('active');
         }
     });
 
-    // Animaciones para los formularios
-    document.addEventListener('livewire:load', function() {
-        const sections = document.querySelectorAll('.security-item, .danger-section');
-        sections.forEach((section, index) => {
-            setTimeout(() => {
-                section.style.opacity = '1';
-                section.style.transform = 'translateY(0)';
-            }, index * 100);
+    // Función de confirmación para cerrar sesión
+    function confirmLogout() {
+        Swal.fire({
+            title: '¿Cerrar sesión?',
+            text: "¿Estás seguro de que deseas salir de tu cuenta?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#05846b',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
         });
-    });
+    }
+
+    
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CertificadosCoopTal\resources\views/profile/show.blade.php ENDPATH**/ ?>

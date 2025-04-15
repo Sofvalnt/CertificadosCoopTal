@@ -79,6 +79,11 @@ if (isset($__slots)) unset($__slots);
 
         <?php echo \Livewire\Mechanisms\FrontendAssets\FrontendAssets::scripts(); ?>
 
+
+
+        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+    <?php echo csrf_field(); ?>
+</form>
     </body>
 </html>
 <?php /**PATH C:\xampp\htdocs\CertificadosCoopTal\resources\views/layouts/app.blade.php ENDPATH**/ ?>

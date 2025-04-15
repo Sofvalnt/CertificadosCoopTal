@@ -1,20 +1,42 @@
 <?php $__env->startSection('title', 'Generador de diplomas'); ?>
 
 <?php $__env->startSection('content_header'); ?>
-    <h1><center>Generador de diplomas</h1>
-    <p>A continuacion, puedes descargar tu plantilla y escribir los datos del curso, los nombres de los alumnos con su respetiva nota y se generará automaticamente</p></center>
+    <h1><center>Generador de Diplomas para Comité de Educación</h1>
+    <div class="instrucciones">
+    <p>En esta página puedes generar certificados de reconocimiento para participantes de cursos o talleres.</p>
+    
+    <p><span class="destacado">Instrucciones:</span></p>
+    <ol>
+        <li>Descarga la plantilla en formato CSV haciendo clic en el botón correspondiente.</li>
+        <li><span class="destacado">No modifiques la estructura de la plantilla</span>, ya que es específica para que el sistema pueda leerla correctamente.</li>
+        <li>Completa solo los campos solicitados en el archivo CSV con los datos necesarios.</li>
+        <li>Sube el archivo completado utilizando el botón "Seleccionar archivo".</li>
+        <li>Genera los certificados haciendo clic en el botón correspondiente.</li>
+        <li>Puedes descargar los certificados individualmente o todos juntos en un archivo ZIP.</li>
+        <li>Si deseas realizar un nuevo lote de certificados, haz clic en Refrescar para limpiar los anteriores.</li>
+    </ol>
+</div>
 <?php $__env->stopSection(); ?>
 
-
-<?php $__env->startSection('content'); ?><!DOCTYPE html>
+<?php $__env->startSection('content'); ?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Profesores</title>
     <style>
 
-
-
-.contenedor-imagen {
+        .instrucciones {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .destacado {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .contenedor-imagen {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,12 +76,24 @@
             color: #666;
         }
 
-
-
-
         #botonDescargarTodos {
             display: none;
         }
+
+        #progreso {
+            width: 100%;
+            background: #f1f1f1;
+            display: none;
+            margin-top: 10px;
+        }
+
+        #barraProgreso {
+            width: 0%;
+            height: 20px;
+            background: #4CAF50;
+            transition: width 0.3s;
+        }
+
         :root {
             --bg-color: #ffffff;
             --text-color: #333333;
@@ -77,7 +111,7 @@
         }
 
         .diploma {
-            background-image: url('vendor/adminlte/dist/img/diploma.png');
+            background-image: url('vendor/adminlte/dist/img/educacion.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -189,22 +223,22 @@
             background: var(--button-hover);
         }
 
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 
-
-
 <div class="contenedor-imagen">
-        <div class="marco-imagen">
-            <img src="vendor/adminlte/dist/img/educacion.png" alt="Imagen" class="imagen-interactiva">
-            <div class="pie-imagen">Comite de Educación</div>
-        </div>
-
-
-
+    <div class="marco-imagen">
+        <img src="vendor/adminlte/dist/img/educacion.png" alt="Imagen" class="imagen-interactiva">
+        <div class="pie-imagen">Comite de Educación</div>
+    </div>
+</div>
 
 <div class="botones">
     <div>
@@ -214,19 +248,14 @@
         <input type="file" id="archivoCSV" accept=".csv">
         <button onclick="generarDiplomas()" id="botonGenerar">Generar Diplomas</button>
         <button onclick="descargarTodos()" id="botonDescargarTodos">Descargar Todos (ZIP)</button>
-        <button onclick="refrescarDiplomas()" class="btn btn-info">
-                <i class="fas fa-sync-alt"></i> Refrescar Diplomas
-            </button>
-            <button onclick="eliminarDiplomas()" class="btn btn-danger">
-                <i class="fas fa-trash-alt"></i> Eliminar Todos
-            </button>
-        </div>
-        <div id="contenedor"></div>
-        <div class="diploma-controls">
-            
+        <button onclick="refrescarDiplomas()" class="btn btn-info">Refrescar</button>
     </div> 
+    <div id="progreso">
+        <div id="barraProgreso"></div>
+    </div>
 </div>
 
+<div id="contenedor"></div>
 
 <script>
     let estudiantes = [];
@@ -241,7 +270,6 @@
     function descargarPlantilla() {
         const enlace = document.createElement('a');
         enlace.href = 'vendor/adminlte/dist/img/Plantilla_Diploma.csv';
-        
         enlace.download = 'Plantilla_Diploma.csv';
         enlace.click();
     }
@@ -310,7 +338,11 @@
     async function descargarDiploma(indice) {
         try {
             const elemento = document.getElementById(`diploma-${indice}`);
-            const lienzo = await html2canvas(elemento, { useCORS: true, scale: 2 });
+            const lienzo = await html2canvas(elemento, { 
+                useCORS: true, 
+                scale: 1.5,
+                logging: false
+            });
             const enlace = document.createElement('a');
             enlace.download = `Diploma_${estudiantes[indice].nombreCompleto.replace(/ /g, '_')}.png`;
             enlace.href = lienzo.toDataURL('image/png');
@@ -323,30 +355,98 @@
     
     async function descargarTodos() {
         try {
-            const archivoZip = new JSZip();
-            const diplomas = await Promise.all(estudiantes.map(async (estudiante, indice) => {
-                const elemento = document.getElementById(`diploma-${indice}`);
-                const lienzo = await html2canvas(elemento, { useCORS: true, scale: 2 });
-                return {
-                    nombre: `Diploma_${estudiante.nombreCompleto.replace(/ /g, '_')}.png`,
-                    datos: lienzo.toDataURL('image/png')
-                };
-            }));
+            const boton = document.getElementById('botonDescargarTodos');
+            boton.disabled = true;
+            boton.textContent = 'Generando ZIP...';
             
-            diplomas.forEach(diploma => {
-                const datosBase64 = diploma.datos.split(',')[1];
-                archivoZip.file(diploma.nombre, datosBase64, { base64: true });
+            document.getElementById('progreso').style.display = 'block';
+            document.getElementById('barraProgreso').style.width = '0%';
+            
+            const archivoZip = new JSZip();
+            const carpeta = archivoZip.folder("Diplomas");
+            const total = estudiantes.length;
+            
+            // Procesar diplomas en lotes para evitar bloqueo del navegador
+            const batchSize = 3; // Procesar 3 diplomas a la vez
+            for (let i = 0; i < total; i += batchSize) {
+                const batchEnd = Math.min(i + batchSize, total);
+                
+                // Procesar el lote actual
+                const batchPromises = [];
+                for (let j = i; j < batchEnd; j++) {
+                    batchPromises.push(procesarDiploma(j));
+                }
+                
+                // Esperar a que termine el lote actual
+                const batchResults = await Promise.all(batchPromises);
+                
+                // Agregar resultados al ZIP
+                batchResults.forEach((diploma, index) => {
+                    if (diploma) {
+                        const nombreArchivo = `Diploma_${estudiantes[i + index].nombreCompleto.replace(/ /g, '_')}.png`;
+                        carpeta.file(nombreArchivo, diploma.datos, { base64: true });
+                    }
+                });
+                
+                // Actualizar progreso
+                const progreso = Math.round((batchEnd / total) * 100);
+                document.getElementById('barraProgreso').style.width = `${progreso}%`;
+                boton.textContent = `Generando ZIP... ${batchEnd}/${total}`;
+                
+                // Pequeña pausa para permitir que el navegador respire
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Generar y descargar el ZIP
+            const contenido = await archivoZip.generateAsync({ 
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
             });
-
-            const contenido = await archivoZip.generateAsync({ type: "blob" });
+            
             const enlace = document.createElement('a');
             enlace.href = URL.createObjectURL(contenido);
             enlace.download = "Diplomas.zip";
             enlace.click();
+            
+            boton.textContent = 'Descargar Todos (ZIP)';
+            boton.disabled = false;
+            document.getElementById('progreso').style.display = 'none';
+            
         } catch (error) {
             console.error('Error al generar ZIP:', error);
             alert("Error al generar el archivo ZIP");
+            document.getElementById('botonDescargarTodos').textContent = 'Descargar Todos (ZIP)';
+            document.getElementById('botonDescargarTodos').disabled = false;
+            document.getElementById('progreso').style.display = 'none';
         }
+    }
+
+    async function procesarDiploma(indice) {
+        try {
+            const elemento = document.getElementById(`diploma-${indice}`);
+            if (!elemento) return null;
+            
+            const lienzo = await html2canvas(elemento, { 
+                useCORS: true,
+                scale: 1.5,
+                logging: false,
+                async: true,
+                allowTaint: true
+            });
+            
+            return {
+                nombre: `Diploma_${estudiantes[indice].nombreCompleto.replace(/ /g, '_')}.png`,
+                datos: lienzo.toDataURL('image/png', 0.9).split(',')[1] // 90% de calidad
+            };
+        } catch (error) {
+            console.error(`Error procesando diploma ${indice}:`, error);
+            return null;
+        }
+    }
+
+    function refrescarDiplomas() {
+        location.reload();
     }
 </script>
 </body>
@@ -356,9 +456,8 @@
 <?php $__env->startSection('css'); ?>
     <style>
         .sidebar {
-            font-size: 14px; /* Ajusta el tamaño de la fuente */
+            font-size: 14px;
         }
     </style>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CertificadosCoopTal\resources\views/educacion.blade.php ENDPATH**/ ?>
