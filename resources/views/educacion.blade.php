@@ -3,8 +3,8 @@
 @section('title', 'Generador de diplomas')
 
 @section('content_header')
-    <h1><center>Generador de Diplomas para Comité de Educación</h1>
-    <div class="instrucciones">
+<h1><center>Generador de Diplomas General 1</center></h1>
+<div class="instrucciones">
     <p>En esta página puedes generar certificados de reconocimiento para participantes de cursos o talleres.</p>
     
     <p><span class="destacado">Instrucciones:</span></p>
@@ -26,18 +26,52 @@
 <head>
     <title>Profesores</title>
     <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --button-bg: #285430;
+            --button-hover: #112214;
+            --panel-bg: #bdf1c6;
+            --nombre-color: #000;
+            --secondary-color: #285430;
+            --tutor-color: #0d0e0d;
+            --diploma-bg: url('vendor/adminlte/dist/img/educacion.png');
+        }
+
+        .dark-mode {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --button-bg: #285430;
+            --button-hover: #112214;
+            --panel-bg:rgb(20, 29, 22);
+            --nombre-color: #000;
+            --secondary-color: #285430;
+            --tutor-color: #0d0e0d;
+            --diploma-bg: url('vendor/adminlte/dist/img/educacion.png');
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding-bottom: 100px;
+            transition: background-color 0.5s, color 0.5s;
+        }
 
         .instrucciones {
-            background-color: #f9f9f9;
-            border-left: 4px solid #3498db;
+            background-color: var(--panel-bg);
+            border-left: 4px solid var(--button-bg);
             padding: 15px;
             margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.5s;
         }
         
         .destacado {
             font-weight: bold;
-            color: #e74c3c;
+            color: var(--secondary-color);
         }
+
         .contenedor-imagen {
             display: flex;
             justify-content: center;
@@ -46,16 +80,18 @@
         }
         
         .marco-imagen {
-            border: 8px solid #ddd;
+            border: 8px solid var(--panel-bg);
             border-radius: 10px;
             padding: 10px;
-            background-color: #f5f5f5;
+            background-color: var(--panel-bg);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            max-width: 400px;
+            margin: 0 auto;
         }
         
         .marco-imagen:hover {
-            border-color: #4CAF50;
+            border-color: var(--button-bg);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: scale(1.02);
         }
@@ -75,45 +111,15 @@
             text-align: center;
             margin-top: 10px;
             font-style: italic;
-            color: #666;
+            color: var(--text-color);
         }
 
         #botonDescargarTodos {
             display: none;
         }
 
-        #progreso {
-            width: 100%;
-            background: #f1f1f1;
-            display: none;
-            margin-top: 10px;
-        }
-
-        #barraProgreso {
-            width: 0%;
-            height: 20px;
-            background: #4CAF50;
-            transition: width 0.3s;
-        }
-
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --button-bg: #285430;
-            --button-hover: #112214;
-            --panel-bg: #bdf1c6;
-            --nombre-color: #2c3e50;
-            --secondary-color: #285430;
-            --tutor-color: #0d0e0d;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
         .diploma {
-            background-image: url('vendor/adminlte/dist/img/educacion.png');
+            background-image: var(--diploma-bg);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -204,10 +210,25 @@
             background: var(--panel-bg);
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: all 0.5s;
+        }
+
+        .grupo-botones {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         input[type="file"] {
             margin: 10px 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--button-bg);
         }
 
         button {
@@ -217,7 +238,6 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 5px;
             transition: background-color 0.3s;
         }
 
@@ -225,9 +245,102 @@
             background: var(--button-hover);
         }
 
-        button:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
+        #contenedor {
+            margin-top: 20px;
+        }
+
+        .certificado-item {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .btn-descargar {
+            padding: 10px 20px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-descargar:hover {
+            background: var(--button-hover);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            color: var(--text-color);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .progress {
+            height: 20px;
+            background-color: var(--button-bg);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .marco-imagen {
+                max-width: 300px;
+                padding: 3px;
+            }
+            
+            .pie-imagen {
+                font-size: 0.8em;
+            }
+            
+            .botones {
+                padding: 10px;
+            }
+            
+            .grupo-botones {
+                flex-direction: column;
+            }
+            
+            .diploma {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 297/210;
+            }
+            
+            .nombre {
+                font-size: 24px;
+            }
+            
+            .curso {
+                font-size: 18px;
+            }
+            
+            .modalidad, .duracion, .fecha-finalizacion, .fecha-emision, .tutor {
+                font-size: 14px;
+            }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -235,25 +348,28 @@
 </head>
 <body>
 
+<!-- Botón de modo oscuro -->
+<button id="botonModoOscuro" onclick="alternarModoOscuro()" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: transparent; border: none;">
+    <img src="{{ asset('vendor/adminlte/dist/img/day.png') }}" alt="Modo Claro" id="iconoTema" width="40" height="40" style="transition: transform 0.5s;">
+</button>
+
 <div class="contenedor-imagen">
     <div class="marco-imagen">
-        <img src="vendor/adminlte/dist/img/educacion.png" alt="Imagen" class="imagen-interactiva">
-        <div class="pie-imagen">Comite de Educación</div>
+        <img src="vendor/adminlte/dist/img/educacion.png" alt="Imagen" class="imagen-interactiva" id="certificado-preview">
+        <div class="pie-imagen">Vista previa del diseño</div>
     </div>
 </div>
 
 <div class="botones">
-    <div>
+    <div class="grupo-botones">
         <button onclick="descargarPlantilla()">Descargar Plantilla</button> 
     </div>
-    <div>
+    
+    <div class="grupo-botones">
         <input type="file" id="archivoCSV" accept=".csv">
         <button onclick="generarDiplomas()" id="botonGenerar">Generar Diplomas</button>
         <button onclick="descargarTodos()" id="botonDescargarTodos">Descargar Todos (ZIP)</button>
-        <button onclick="refrescarDiplomas()" class="btn btn-info">Refrescar</button>
-    </div> 
-    <div id="progreso">
-        <div id="barraProgreso"></div>
+        <button onclick="refrescarDiplomas()">Refrescar</button>
     </div>
 </div>
 
@@ -262,16 +378,67 @@
 <script>
     let estudiantes = [];
     let metadatos = {
+        cooperativa: 'Cooperativa de Ahorro y Crédito Talanga LTDA',
         curso: '',
         tutor: '',
-        fechaFinalizacion: '',
         modalidad: '',
-        duracion: ''
+        duracion: '',
+        fechaFinalizacion: ''
     };
 
+    // Función para alternar modo oscuro
+    function alternarModoOscuro() {
+        document.body.classList.toggle('dark-mode');
+        const modoOscuroActivado = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            icono.style.transform = 'rotate(360deg)';
+            // Cambiar imagen de vista previa
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/educacion.png";
+        } else {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
+            icono.style.transform = 'rotate(0deg)';
+            // Cambiar imagen de vista previa
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/educacion.png";
+        }
+    }
+
+    // Verificar modo oscuro al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('modoOscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/educacion.png";
+        }
+    });
+
     function descargarPlantilla() {
+        const contenido = `Cooperativa de Ahorro y Crédito Talanga LTDA
+
+INSTRUCCIONES:
+1. Complete los datos del curso abajo
+2. Escriba los nombres de los participantes en la lista
+3. No use tildes ni modifique la estructura
+4. Guarde el archivo como CSV (delimitado por punto y coma)
+
+Curso:;Nombre del curso
+Tutor:;Nombre del tutor
+Tipo Documento:;Certificado
+Modalidad:;Presencial/Virtual
+Duracion:;X horas
+Fecha de finalizacion:;DD/MM/AAAA
+
+Alumnos Aprobados
+Nombre;Nota Final
+Nombre Apellido1 Apellido2;
+Nombre Apellido1 Apellido2;`;
+
+        const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
         const enlace = document.createElement('a');
-        enlace.href = 'vendor/adminlte/dist/img/Plantilla_Diploma.csv';
+        enlace.href = URL.createObjectURL(blob);
         enlace.download = 'Plantilla_Diploma.csv';
         enlace.click();
     }
@@ -284,52 +451,99 @@
             const texto = new TextDecoder('utf-8').decode(new Uint8Array(evento.target.result));
             const lineas = texto.split('\n').map(linea => linea.trim());
             
-            lineas.forEach(linea => {
-                const celdas = linea.split(';').map(c => c.trim());
-                if (celdas[0] === 'Curso:') metadatos.curso = celdas[1] || 'No especificado';
-                if (celdas[0] === 'Tutor:') metadatos.tutor = celdas[1] || 'No especificado';
-                if (celdas[0] === 'Fecha de finalizacion:') metadatos.fechaFinalizacion = celdas[1] || 'No especificada';
-                if (celdas[0] === 'Modalidad:') metadatos.modalidad = celdas[1] || 'No especificada';
-                if (celdas[0] === 'Duracion:') metadatos.duracion = celdas[1] || 'No especificada';
-            });
-
-            const indiceEncabezado = lineas.findIndex(linea => linea.startsWith('Nombre;Nota Final'));
-            if (indiceEncabezado === -1) return alert("Error: El CSV no tiene la cabecera 'Nombre;Nota Final'");
-
-            estudiantes = [];
-            for (let i = indiceEncabezado + 1; i < lineas.length; i++) {
-                const celdas = lineas[i].split(';').map(c => c.trim());
-                if (celdas[0]) {
-                    estudiantes.push({
-                        nombreCompleto: celdas[0],
-                        ...metadatos,
-                        fechaEmision: new Date().toLocaleDateString('es-ES', { 
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        })
-                    });
+            // Extraer metadatos
+            for (let i = 0; i < lineas.length; i++) {
+                const linea = lineas[i];
+                if (linea.startsWith('Curso:')) {
+                    metadatos.curso = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Tutor:')) {
+                    metadatos.tutor = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Tipo Documento:')) {
+                    metadatos.tipoDocumento = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Modalidad:')) {
+                    metadatos.modalidad = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Duracion:')) {
+                    metadatos.duracion = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Fecha de finalizacion:')) {
+                    metadatos.fechaFinalizacion = linea.split(';')[1] || '';
                 }
             }
+
+            // Buscar inicio de la lista de estudiantes
+            estudiantes = [];
+            let encontroEncabezado = false;
+            let finDeLista = false;
+            
+            for (let i = 0; i < lineas.length && !finDeLista; i++) {
+                const linea = lineas[i];
+                
+                // Buscar el encabezado de la lista de estudiantes
+                if (linea.includes('Nombre;Nota Final')) {
+                    encontroEncabezado = true;
+                    continue;
+                }
+                
+                // Si encontramos el encabezado, procesar estudiantes
+                if (encontroEncabezado) {
+                    const celdas = linea.split(';');
+                    const nombre = celdas[0]?.trim();
+                    
+                    // Detener si encontramos una línea vacía o con ===
+                    if (linea === '' || linea.startsWith('===') || linea.startsWith(';;')) {
+                        finDeLista = true;
+                        continue;
+                    }
+                    
+                    // Solo procesar si hay un nombre válido (no vacío y no solo espacios o caracteres especiales)
+                    if (nombre && nombre.length > 0 && !/^[;=\s]+$/.test(nombre)) {
+                        estudiantes.push({
+                            nombreCompleto: nombre,
+                            ...metadatos,
+                            fechaEmision: new Date().toLocaleDateString('es-ES', { 
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            })
+                        });
+                    }
+                }
+            }
+            
+            if (estudiantes.length > 0) {
+                document.getElementById('botonGenerar').disabled = false;
+                alert(`Se han cargado ${estudiantes.length} participantes correctamente`);
+            } else {
+                alert("No se encontraron participantes válidos en el archivo");
+                document.getElementById('botonGenerar').disabled = true;
+            }
         };
+        
+        lector.onerror = function() {
+            alert("Error al leer el archivo");
+            document.getElementById('botonGenerar').disabled = true;
+        };
+        
         lector.readAsArrayBuffer(archivo);
     });
 
     function generarDiplomas() {
         const contenedor = document.getElementById('contenedor');
         contenedor.innerHTML = '';
+        
         estudiantes.forEach((estudiante, indice) => {
             contenedor.innerHTML += `
-                <div class="diploma" id="diploma-${indice}">
-                    <div class="nombre"><u>${estudiante.nombreCompleto}</u></div>
-                    <div class="curso"><u>${estudiante.curso}</u></div>
-                    <div class="modalidad"><u>${estudiante.modalidad}</u></div>
-                    <div class="duracion"><u>${estudiante.duracion}</u></div>
-                    <div class="fecha-finalizacion">${estudiante.fechaFinalizacion}</div>
-                    <div class="fecha-emision">${estudiante.fechaEmision}</div>
-                    <div class="tutor">${estudiante.tutor}</div>
+                <div class="certificado-item">
+                    <div class="diploma" id="diploma-${indice}">
+                        <div class="nombre">${estudiante.nombreCompleto}</div>
+                        <div class="curso">${estudiante.curso}</div>
+                        <div class="modalidad">${estudiante.modalidad}</div>
+                        <div class="duracion">${estudiante.duracion}</div>
+                        <div class="fecha-finalizacion">${estudiante.fechaFinalizacion}</div>
+                        <div class="fecha-emision">${estudiante.fechaEmision}</div>
+                        <div class="tutor">${estudiante.tutor}</div>
+                    </div>
+                    <button onclick="descargarDiploma(${indice})" class="btn-descargar">Descargar Diploma ${indice + 1}</button>
                 </div>
-                <button onclick="descargarDiploma(${indice})">Descargar Individual</button>
             `;
         });
         
@@ -342,8 +556,8 @@
             const elemento = document.getElementById(`diploma-${indice}`);
             const lienzo = await html2canvas(elemento, { 
                 useCORS: true, 
-                scale: 1.5,
-                logging: false
+                scale: 2,
+                backgroundColor: null
             });
             const enlace = document.createElement('a');
             enlace.download = `Diploma_${estudiantes[indice].nombreCompleto.replace(/ /g, '_')}.png`;
@@ -357,49 +571,71 @@
     
     async function descargarTodos() {
         try {
-            const boton = document.getElementById('botonDescargarTodos');
-            boton.disabled = true;
-            boton.textContent = 'Generando ZIP...';
+            // Crear overlay de carga
+            const overlay = document.createElement('div');
+            overlay.className = 'loading-overlay';
+            overlay.innerHTML = `
+                <div class="loading-content">
+                    <h3>Generando archivo ZIP</h3>
+                    <p>Por favor espere, esto puede tomar varios minutos...</p>
+                    <div class="progress-bar">
+                        <div class="progress" id="zip-progress"></div>
+                    </div>
+                    <p id="progress-text">0/${estudiantes.length} diplomas procesados</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
             
-            document.getElementById('progreso').style.display = 'block';
-            document.getElementById('barraProgreso').style.width = '0%';
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            botonDescargar.disabled = true;
+            botonDescargar.textContent = 'Generando...';
             
             const archivoZip = new JSZip();
-            const carpeta = archivoZip.folder("Diplomas");
-            const total = estudiantes.length;
+            const folder = archivoZip.folder("Diplomas");
+            const progressBar = document.getElementById('zip-progress');
+            const progressText = document.getElementById('progress-text');
             
-            // Procesar diplomas en lotes para evitar bloqueo del navegador
-            const batchSize = 3; // Procesar 3 diplomas a la vez
-            for (let i = 0; i < total; i += batchSize) {
-                const batchEnd = Math.min(i + batchSize, total);
-                
-                // Procesar el lote actual
-                const batchPromises = [];
-                for (let j = i; j < batchEnd; j++) {
-                    batchPromises.push(procesarDiploma(j));
-                }
-                
-                // Esperar a que termine el lote actual
-                const batchResults = await Promise.all(batchPromises);
-                
-                // Agregar resultados al ZIP
-                batchResults.forEach((diploma, index) => {
-                    if (diploma) {
-                        const nombreArchivo = `Diploma_${estudiantes[i + index].nombreCompleto.replace(/ /g, '_')}.png`;
-                        carpeta.file(nombreArchivo, diploma.datos, { base64: true });
-                    }
+            // Procesar en lotes de 3 para mejor rendimiento
+            const batchSize = 3;
+            let processed = 0;
+            
+            for (let i = 0; i < estudiantes.length; i += batchSize) {
+                const batch = estudiantes.slice(i, i + batchSize);
+                const batchPromises = batch.map(async (estudiante, batchIndex) => {
+                    const indice = i + batchIndex;
+                    const elemento = document.getElementById(`diploma-${indice}`);
+                    
+                    const lienzo = await html2canvas(elemento, { 
+                        useCORS: true, 
+                        scale: 1.5,
+                        backgroundColor: null,
+                        logging: false
+                    });
+                    
+                    return {
+                        nombre: `Diploma_${estudiante.nombreCompleto.replace(/ /g, '_')}.png`,
+                        datos: lienzo.toDataURL('image/png', 0.8)
+                    };
                 });
                 
-                // Actualizar progreso
-                const progreso = Math.round((batchEnd / total) * 100);
-                document.getElementById('barraProgreso').style.width = `${progreso}%`;
-                boton.textContent = `Generando ZIP... ${batchEnd}/${total}`;
+                const batchResults = await Promise.all(batchPromises);
                 
-                // Pequeña pausa para permitir que el navegador respire
+                batchResults.forEach(diploma => {
+                    const datosBase64 = diploma.datos.split(',')[1];
+                    folder.file(diploma.nombre, datosBase64, { base64: true });
+                });
+                
+                processed = Math.min(i + batchSize, estudiantes.length);
+                const progressPercent = (processed / estudiantes.length) * 100;
+                
+                progressBar.style.width = `${progressPercent}%`;
+                progressText.textContent = `${processed}/${estudiantes.length} diplomas procesados`;
+                
+                // Pequeña pausa entre lotes para evitar bloqueo del navegador
                 await new Promise(resolve => setTimeout(resolve, 100));
             }
             
-            // Generar y descargar el ZIP
+            // Compresión mejorada
             const contenido = await archivoZip.generateAsync({ 
                 type: "blob",
                 compression: "DEFLATE",
@@ -411,44 +647,35 @@
             enlace.download = "Diplomas.zip";
             enlace.click();
             
-            boton.textContent = 'Descargar Todos (ZIP)';
-            boton.disabled = false;
-            document.getElementById('progreso').style.display = 'none';
+            // Limpiar
+            document.body.removeChild(overlay);
+            botonDescargar.disabled = false;
+            botonDescargar.textContent = 'Descargar Todos (ZIP)';
             
         } catch (error) {
             console.error('Error al generar ZIP:', error);
-            alert("Error al generar el archivo ZIP");
-            document.getElementById('botonDescargarTodos').textContent = 'Descargar Todos (ZIP)';
-            document.getElementById('botonDescargarTodos').disabled = false;
-            document.getElementById('progreso').style.display = 'none';
-        }
-    }
-
-    async function procesarDiploma(indice) {
-        try {
-            const elemento = document.getElementById(`diploma-${indice}`);
-            if (!elemento) return null;
+            alert("Error al generar el archivo ZIP. Por favor intente con menos diplomas o recargue la página.");
             
-            const lienzo = await html2canvas(elemento, { 
-                useCORS: true,
-                scale: 1.5,
-                logging: false,
-                async: true,
-                allowTaint: true
-            });
+            // Limpiar en caso de error
+            const overlay = document.querySelector('.loading-overlay');
+            if (overlay) document.body.removeChild(overlay);
             
-            return {
-                nombre: `Diploma_${estudiantes[indice].nombreCompleto.replace(/ /g, '_')}.png`,
-                datos: lienzo.toDataURL('image/png', 0.9).split(',')[1] // 90% de calidad
-            };
-        } catch (error) {
-            console.error(`Error procesando diploma ${indice}:`, error);
-            return null;
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            if (botonDescargar) {
+                botonDescargar.disabled = false;
+                botonDescargar.textContent = 'Descargar Todos (ZIP)';
+            }
         }
     }
 
     function refrescarDiplomas() {
-        location.reload();
+        if (confirm("¿Estás seguro de que deseas eliminar todos los diplomas generados?")) {
+            document.getElementById('contenedor').innerHTML = '';
+            document.getElementById('botonDescargarTodos').style.display = 'none';
+            document.getElementById('botonGenerar').disabled = false;
+            estudiantes = [];
+            document.getElementById('archivoCSV').value = '';
+        }
     }
 </script>
 </body>

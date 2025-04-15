@@ -1,0 +1,73 @@
+/* Sidebar estático y estilos fijos */
+.main-sidebar {
+    position: fixed !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    will-change: transform !important;
+    z-index: 1030 !important;
+}
+
+.content-wrapper {
+    margin-left: 250px !important;
+}
+
+/* Estilos para el botón de cerrar sesión */
+.logout-btn {
+    background-color: #dc3545 !important;
+    color: white !important;
+    margin-top: 20px !important;
+    border-radius: 5px !important;
+    padding: 10px 15px !important;
+    width: calc(100% - 30px) !important;
+    margin-left: 15px !important;
+    margin-bottom: 20px !important;
+    text-align: left !important;
+    transition: all 0.3s ease !important;
+}
+
+.logout-btn:hover {
+    background-color: #c82333 !important;
+    transform: translateX(5px) !important;
+}
+
+.logout-btn i {
+    margin-right: 10px !important;
+}
+
+/* Estilos para el enlace de Classroom */
+.sidebar .nav-item a[target="_blank"] {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-radius: 5px !important;
+    margin: 10px 15px !important;
+    padding: 10px 15px !important;
+    transition: all 0.3s ease !important;
+}
+
+.sidebar .nav-item a[target="_blank"]:hover {
+    background-color: #218838 !important;
+    transform: translateX(5px) !important;
+}
+
+/* Estilos para el sidebar en general */
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, 
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active:hover {
+    background-color: #343a40 !important;
+    color: #fff !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link:hover {
+    background-color: #495057 !important;
+    color: #fff !important;
+}
+
+/* Mantener el footer abajo */
+.wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+.content-wrapper {
+    flex: 1 !important;
+}

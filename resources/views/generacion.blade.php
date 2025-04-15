@@ -21,22 +21,39 @@
             --panel-bg: #bdf1c6;
             --nombre-color: #2c3e50;
             --tutor-color: #0d0e0d;
+            --border-color: #ddd;
+            --highlight-color: #e74c3c;
+            --progress-bg: #285430;
         }
 
         .dark-mode {
+            --primary: #4a8c2a;
+            --secondary: #f8c537;
             --bg-color: #1a1a1a;
             --text-color: #e0e0e0;
-            --panel-bg: #2d2d2d;
-            --nombre-color: #c0c0c0;
+            --panel-bg: #2d3748;
+            --nombre-color: #f8c537;
             --tutor-color: #e0e0e0;
+            --border-color: #444;
+            --highlight-color: #f8c537;
+            --progress-bg: #f8c537;
+            --light: #2d3748;
+            --dark: #f5f7fa;
+            
+            --button-bg: #285430;
+            --button-hover: #112214;
+            --panel-bg:rgb(44, 65, 49);
+            --nombre-color: #000;
+            --secondary-color: #285430;
+            --tutor-color: #0d0e0d;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-            padding-bottom: 100px;
+            transition: background-color 0.5s, color 0.5s;
+            padding-bottom: 150px;
         }
 
         .generator-container {
@@ -46,6 +63,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
         }
 
         .fixed-buttons {
@@ -60,14 +78,16 @@
             z-index: 1000;
             display: flex;
             gap: 15px;
+            transition: all 0.5s;
         }
 
         .instructions {
-            background-color: rgba(44, 94, 26, 0.1);
+            background-color: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
             border-left: 5px solid var(--primary);
+            transition: all 0.5s;
         }
 
         .instructions h3 {
@@ -96,6 +116,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 100;
+            transition: all 0.5s;
         }
 
         .design-option {
@@ -136,11 +157,11 @@
         }
 
         .controls-section {
-            background: rgba(44, 94, 26, 0.05);
+            background: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            background-color: var(--panel-bg);
+            transition: all 0.5s;
         }
 
         .control-group {
@@ -167,7 +188,7 @@
         }
 
         .btn:hover {
-            background-color: #3a7a24;
+            background-color: var(--dark);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
@@ -300,7 +321,7 @@
             font-size: 40px;
             text-align: center;
             font-family: 'Vivaldi', serif;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .curso {
@@ -309,7 +330,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             font-size: 30px;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .modalidad {
@@ -318,7 +339,7 @@
             left: 43%;
             transform: translate(-50%, -50%);
             font-size: 20px;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .duracion {
@@ -327,7 +348,7 @@
             left: 73%;
             transform: translate(-50%, -50%);
             font-size: 20px;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .fecha-finalizacion {
@@ -336,7 +357,7 @@
             left: 58%;
             transform: translate(-50%, -50%);
             font-size: 20px;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .fecha-emision {
@@ -344,7 +365,7 @@
             top: 66%;
             left: 50%;
             font-size: 20px;
-            color: #000;
+            color: var(--nombre-color);
         }
 
         .tutor {
@@ -352,7 +373,7 @@
             top: 81%;
             left: 65%;
             font-size: 20px;
-            color: #000;
+            color: var(--tutor-color);
         }
 
         /* Botón de modo oscuro */
@@ -367,28 +388,142 @@
             z-index: 1000;
         }
 
-        #botonModoOscuro img {
+        #iconoTema {
             width: 40px;
             height: 40px;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s, filter 0.3s;
         }
 
-        #botonModoOscuro:hover img {
+        #botonModoOscuro:hover #iconoTema {
+            filter: brightness(1.2);
             transform: scale(1.1);
+        }
+
+        /* Estilos para el input de archivo */
+        .file-input-container {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--info);
+            color: white;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .file-input-label:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        #archivoCSV {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        #nombre-archivo {
+            margin-left: 10px;
+            color: var(--text-color);
+        }
+
+        /* Estilos para el modal de carga */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            color: var(--text-color);
+            max-width: 80%;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: var(--progress-bg);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
         }
 
         @media (max-width: 768px) {
             .design-option {
                 width: 150px;
             }
+            
             .control-group {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
             .fixed-buttons {
                 width: 90%;
                 flex-direction: column;
                 align-items: center;
+            }
+            
+            .diploma-1, .diploma-2, .diploma-3, .diploma-4, .diploma-5 {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 297/210;
+            }
+            
+            .nombre {
+                font-size: 24px;
+                top: 40%;
+            }
+            
+            .curso {
+                font-size: 18px;
+                top: 25%;
+            }
+            
+            .modalidad, .duracion, .fecha-finalizacion, .fecha-emision, .tutor {
+                font-size: 14px;
+            }
+            
+            #botonModoOscuro {
+                top: 10px;
+                right: 10px;
+            }
+
+            #iconoTema {
+                width: 30px;
+                height: 30px;
             }
         }
     </style>
@@ -473,7 +608,7 @@
     <!-- Vista previa del diploma -->
     <div class="diploma-preview-container">
         <img src="{{ asset('vendor/adminlte/dist/img/diploma.png') }}" id="diploma-preview" class="diploma-preview">
-        <div style="margin-top: 10px; font-style: italic; color: #666;">Vista previa del diseño seleccionado</div>
+        <div style="margin-top: 10px; font-style: italic; color: var(--text-color); opacity: 0.8;">Vista previa del diseño seleccionado</div>
     </div>
 
     <!-- Diplomas generados -->
@@ -595,6 +730,7 @@
         // Verificar modo oscuro al cargar
         if (localStorage.getItem('modoOscuro') === 'true') {
             document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
         }
     });
 
@@ -602,6 +738,15 @@
         document.body.classList.toggle('dark-mode');
         const modoOscuroActivado = document.body.classList.contains('dark-mode');
         localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            icono.style.transform = 'rotate(360deg)';
+        } else {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
+            icono.style.transform = 'rotate(0deg)';
+        }
     }
 
     function procesarArchivoCSV(archivo) {
@@ -637,20 +782,24 @@
                 return;
             }
 
-            const indiceEncabezado = lineas.findIndex(linea => linea.startsWith('Nombre;Nota Final'));
+            // Buscar la línea que contiene "Nombre;Nota Final"
+            const indiceEncabezado = lineas.findIndex(linea => linea.includes('Nombre;Nota Final'));
             if (indiceEncabezado === -1) {
                 alert("Error: El CSV no tiene la cabecera 'Nombre;Nota Final'");
                 return;
             }
 
             estudiantes = [];
+            // Procesar desde la línea siguiente al encabezado hasta el final
             for (let i = indiceEncabezado + 1; i < lineas.length; i++) {
                 const celdas = lineas[i].split(';').map(c => c.trim());
-                // Solo procesar si la línea tiene contenido en la primera celda y no es una fila vacía
-                if (celdas[0] && celdas[0] !== '' && celdas[0] !== 'Nombre') {
+                const nombre = celdas[0];
+                
+                // Solo procesar si hay un nombre válido (no vacío y no comienza con caracteres especiales)
+                if (nombre && nombre.length > 0 && !nombre.startsWith(';;') && !nombre.startsWith('===')) {
                     estudiantes.push({
                         id: i,
-                        nombreCompleto: celdas[0],
+                        nombreCompleto: nombre,
                         curso: metadatos.curso,
                         tutor: metadatos.tutor,
                         fechaFinalizacion: metadatos.fechaFinalizacion,
@@ -675,8 +824,29 @@
     }
 
     function descargarPlantilla() {
+        const contenido = `Cooperativa de Ahorro y Crédito Talanga LTDA
+
+INSTRUCCIONES:
+1. Complete los datos del curso abajo
+2. Escriba los nombres de los participantes en la lista
+3. No use tildes ni modifique la estructura
+4. Guarde el archivo como CSV (delimitado por punto y coma)
+
+Curso:;Nombre del curso
+Tutor:;Nombre del tutor
+Tipo Documento:;Certificado
+Modalidad:;Presencial/Virtual
+Duracion:;X horas
+Fecha de finalizacion:;DD/MM/AAAA
+
+Alumnos Aprobados
+Nombre;Nota Final
+Nombre Apellido1 Apellido2;
+Nombre Apellido1 Apellido2;`;
+
+        const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
         const enlace = document.createElement('a');
-        enlace.href = 'vendor/adminlte/dist/img/Plantilla_Diploma.csv';
+        enlace.href = URL.createObjectURL(blob);
         enlace.download = 'Plantilla_Diploma.csv';
         enlace.click();
     }
@@ -733,34 +903,90 @@
     
     async function descargarTodos() {
         try {
+            // Mostrar mensaje de carga
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = `
+                <div class="loading-content">
+                    <h3>Generando archivo ZIP</h3>
+                    <p>Por favor espere, esto puede tomar varios minutos...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <p id="progress-text">0/${estudiantes.length} diplomas procesados</p>
+                </div>
+            `;
+            document.body.appendChild(loadingOverlay);
+            
             const archivoZip = new JSZip();
-            const diplomas = await Promise.all(estudiantes.map(async (estudiante, indice) => {
-                const elemento = document.getElementById(`diploma-${estudiante.id}`);
-                const lienzo = await html2canvas(elemento, { 
-                    useCORS: true,
-                    scale: 2,
-                    logging: false,
-                    allowTaint: true
+            const folder = archivoZip.folder("Diplomas");
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            // Procesar en lotes para mejor rendimiento
+            const batchSize = 3;
+            let processed = 0;
+            
+            for (let i = 0; i < estudiantes.length; i += batchSize) {
+                const batch = estudiantes.slice(i, i + batchSize);
+                const batchPromises = batch.map(async (estudiante, batchIndex) => {
+                    const indice = i + batchIndex;
+                    const elemento = document.getElementById(`diploma-${estudiante.id}`);
+                    
+                    const lienzo = await html2canvas(elemento, { 
+                        useCORS: true,
+                        scale: 1.5,
+                        logging: false,
+                        allowTaint: true
+                    });
+                    
+                    return {
+                        nombre: `Diploma_${estudiante.nombreCompleto.replace(/ /g, '_')}.png`,
+                        datos: lienzo.toDataURL('image/png', 0.8)
+                    };
                 });
-                return {
-                    nombre: `Diploma_${estudiante.nombreCompleto.replace(/ /g, '_')}.png`,
-                    datos: lienzo.toDataURL('image/png')
-                };
+                
+                const batchResults = await Promise.all(batchPromises);
+                
+                batchResults.forEach(diploma => {
+                    const datosBase64 = diploma.datos.split(',')[1];
+                    folder.file(diploma.nombre, datosBase64, { base64: true });
+                });
+                
+                processed = Math.min(i + batchSize, estudiantes.length);
+                const progressPercent = (processed / estudiantes.length) * 100;
+                
+                progressBar.style.width = `${progressPercent}%`;
+                progressText.textContent = `${processed}/${estudiantes.length} diplomas procesados`;
+                
+                // Pequeña pausa entre lotes para evitar bloqueo del navegador
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Compresión mejorada
+            const contenido = await archivoZip.generateAsync({ 
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
             });
             
-            diplomas.forEach(diploma => {
-                const datosBase64 = diploma.datos.split(',')[1];
-                archivoZip.file(diploma.nombre, datosBase64, { base64: true });
-            });
-
-            const contenido = await archivoZip.generateAsync({ type: "blob" });
             const enlace = document.createElement('a');
             enlace.href = URL.createObjectURL(contenido);
             enlace.download = "Diplomas.zip";
             enlace.click();
+            
+            // Eliminar overlay de carga
+            document.body.removeChild(loadingOverlay);
+            
         } catch (error) {
             console.error('Error al generar ZIP:', error);
-            alert("Error al generar el archivo ZIP");
+            alert("Error al generar el archivo ZIP. Por favor intente con menos diplomas o recargue la página.");
+            
+            // Eliminar overlay de carga en caso de error
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            if (loadingOverlay) {
+                document.body.removeChild(loadingOverlay);
+            }
         }
     }
 

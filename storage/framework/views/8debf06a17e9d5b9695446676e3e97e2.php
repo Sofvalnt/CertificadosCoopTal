@@ -134,7 +134,10 @@
 
     
     <?php echo $__env->yieldContent('adminlte_js'); ?>
-
+    <?php $__env->startPush('css'); ?>
+    
+    <link rel="stylesheet" href="<?php echo e(asset('css/adminlte-custom.css')); ?>">
+<?php $__env->stopPush(); ?>
 </body>
 
 </html>

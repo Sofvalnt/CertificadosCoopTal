@@ -35,6 +35,25 @@
             --nombre-color: #2c3e50;
             --secondary-color: #285430;
             --tutor-color: #0d0e0d;
+            --certificado-bg: url('vendor/adminlte/dist/img/participacion.png');
+            --border-color: #ddd;
+            --highlight-color: #e74c3c;
+            --progress-bg: #285430;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #000;
+            --button-bg: #4a8c2a;
+            --button-hover: #2c5e1a;
+            --panel-bg:rgb(20, 29, 22);
+            --nombre-color: #000;
+            --secondary-color: #f8c537;
+            --tutor-color: #000;
+            --certificado-bg: url('vendor/adminlte/dist/img/participacion.png');
+            --border-color: #444;
+            --highlight-color: #f8c537;
+            --progress-bg: #f8c537;
         }
 
         body {
@@ -42,18 +61,21 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             padding-bottom: 100px;
+            transition: background-color 0.5s, color 0.5s;
         }
 
         .instrucciones {
-            background-color: #f9f9f9;
-            border-left: 4px solid #3498db;
+            background-color: var(--panel-bg);
+            border-left: 4px solid var(--button-bg);
             padding: 15px;
             margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.5s;
         }
         
         .destacado {
             font-weight: bold;
-            color: #e74c3c;
+            color: var(--highlight-color);
         }
 
         .contenedor-imagen {
@@ -64,10 +86,10 @@
         }
         
         .marco-imagen {
-            border: 8px solid #ddd;
+            border: 8px solid var(--border-color);
             border-radius: 10px;
             padding: 5px;
-            background-color: #f5f5f5;
+            background-color: var(--panel-bg);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             max-width: 400px;
@@ -75,7 +97,7 @@
         }
         
         .marco-imagen:hover {
-            border-color: #4CAF50;
+            border-color: var(--button-bg);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transform: scale(1.01);
         }
@@ -95,8 +117,9 @@
             text-align: center;
             margin-top: 5px;
             font-style: italic;
-            color: #666;
+            color: var(--text-color);
             font-size: 0.9em;
+            opacity: 0.8;
         }
 
         #botonDescargarTodos {
@@ -104,7 +127,7 @@
         }
 
         .certificado {
-            background-image: url('vendor/adminlte/dist/img/participacion.png');
+            background-image: var(--certificado-bg);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -122,9 +145,8 @@
             font-size: 50px;
             text-align: center;
             font-family: 'Vivaldi', sans-serif;
-            color: #000;
+            color: var(--nombre-color);
         }
-
 
         .texto-certificado {
             position: absolute;
@@ -155,6 +177,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            transition: all 0.5s;
         }
 
         .grupo-botones {
@@ -165,6 +188,11 @@
 
         input[type="file"] {
             margin: 10px 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--button-bg);
         }
 
         button {
@@ -174,11 +202,17 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
 
         button:hover {
             background: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
         }
 
         #contenedor {
@@ -188,6 +222,83 @@
         .certificado-item {
             margin-bottom: 30px;
             text-align: center;
+        }
+
+        .btn-descargar {
+            padding: 10px 20px;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+        
+        .btn-descargar:hover {
+            background: var(--button-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Estilos para el modal de carga */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            color: var(--text-color);
+            max-width: 80%;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 20px;
+            background-color: var(--progress-bg);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Botón de modo oscuro */
+        #botonModoOscuro {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        #iconoTema {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.5s, filter 0.3s;
+        }
+
+        #iconoTema:hover {
+            filter: brightness(1.2);
         }
 
         @media (max-width: 768px) {
@@ -214,7 +325,6 @@
                 aspect-ratio: 297/210;
             }
             
-            
             .nombre-certificado {
                 font-size: 24px;
                 top: 35%;
@@ -226,52 +336,30 @@
                 width: 80%;
             }
             
-          
             .fecha-certificado {
                 top: 85%;
             }
-        }
-        /* Añadir estilo para el modal de carga */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .loading-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        }
-        
-        .progress-bar {
-            width: 100%;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        
-        .progress {
-            height: 20px;
-            background-color: #285430;
-            border-radius: 5px;
-            width: 0%;
-            transition: width 0.3s;
+
+            #botonModoOscuro {
+                top: 10px;
+                right: 10px;
+            }
+
+            #iconoTema {
+                width: 30px;
+                height: 30px;
+            }
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
+
+<!-- Botón de modo oscuro -->
+<button id="botonModoOscuro" onclick="alternarModoOscuro()">
+    <img src="{{ asset('vendor/adminlte/dist/img/day.png') }}" alt="Modo Claro" id="iconoTema" width="40" height="40">
+</button>
 
 <div class="contenedor-imagen">
     <div class="marco-imagen">
@@ -302,6 +390,33 @@
         tutor: '',
         texto: ''
     };
+
+    // Función para alternar modo oscuro
+    function alternarModoOscuro() {
+        document.body.classList.toggle('dark-mode');
+        const modoOscuroActivado = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            icono.style.transform = 'rotate(360deg)';
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/participacion.png";
+        } else {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
+            icono.style.transform = 'rotate(0deg)';
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/participacion.png";
+        }
+    }
+
+    // Verificar modo oscuro al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('modoOscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/participacion.png";
+        }
+    });
 
     function descargarPlantilla() {
         const contenido = `Cooperativa de Ahorro y Crédito Talanga LTDA
@@ -419,47 +534,6 @@ Glenda Sagrario Hernandez Rodriguez Caceres Jaqueline`;
     
     async function descargarTodos() {
         try {
-            const archivoZip = new JSZip();
-            const certificados = await Promise.all(participantes.map(async (participante, indice) => {
-                const elemento = document.getElementById(`certificado-${indice}`);
-                const lienzo = await html2canvas(elemento, { 
-                    useCORS: true, 
-                    scale: 2,
-                    backgroundColor: null
-                });
-                return {
-                    nombre: `Certificado_${participante.nombre.replace(/ /g, '_')}.png`,
-                    datos: lienzo.toDataURL('image/png')
-                };
-            }));
-            
-            certificados.forEach(certificado => {
-                const datosBase64 = certificado.datos.split(',')[1];
-                archivoZip.file(certificado.nombre, datosBase64, { base64: true });
-            });
-
-            const contenido = await archivoZip.generateAsync({ type: "blob" });
-            const enlace = document.createElement('a');
-            enlace.href = URL.createObjectURL(contenido);
-            enlace.download = "Certificados.zip";
-            enlace.click();
-        } catch (error) {
-            console.error('Error al generar ZIP:', error);
-            alert("Error al generar el archivo ZIP");
-        }
-    }
-
-    function refrescarCertificados() {
-        if (confirm("¿Estás seguro de que deseas eliminar todos los certificados generados?")) {
-            document.getElementById('contenedor').innerHTML = '';
-            document.getElementById('botonDescargarTodos').style.display = 'none';
-            document.getElementById('botonGenerar').disabled = false;
-            participantes = [];
-            document.getElementById('archivoCSV').value = '';
-        }
-    }
-    async function descargarTodos() {
-        try {
             // Crear overlay de carga
             const overlay = document.createElement('div');
             overlay.className = 'loading-overlay';
@@ -556,6 +630,16 @@ Glenda Sagrario Hernandez Rodriguez Caceres Jaqueline`;
             }
         }
     }
+
+    function refrescarCertificados() {
+        if (confirm("¿Estás seguro de que deseas eliminar todos los certificados generados?")) {
+            document.getElementById('contenedor').innerHTML = '';
+            document.getElementById('botonDescargarTodos').style.display = 'none';
+            document.getElementById('botonGenerar').disabled = false;
+            participantes = [];
+            document.getElementById('archivoCSV').value = '';
+        }
+    }
 </script>
 </body>
 </html>
@@ -565,21 +649,6 @@ Glenda Sagrario Hernandez Rodriguez Caceres Jaqueline`;
     <style>
         .sidebar {
             font-size: 14px;
-        }
-        
-        .btn-descargar {
-            padding: 10px 20px;
-            background: var(--button-bg);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 15px 0;
-            transition: background-color 0.3s;
-        }
-        
-        .btn-descargar:hover {
-            background: var(--button-hover);
         }
     </style>
 @endsection

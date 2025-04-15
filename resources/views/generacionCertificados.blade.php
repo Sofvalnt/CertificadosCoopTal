@@ -21,22 +21,44 @@
             --panel-bg: #bdf1c6;
             --nombre-color: #2c3e50;
             --tutor-color: #0d0e0d;
+            --border-color: #ddd;
+            --highlight-color: #e74c3c;
+            --progress-bg: #285430;
+            --certificado-bg-1: url('{{ asset("vendor/adminlte/dist/img/participacion.png") }}');
+            --certificado-bg-2: url('{{ asset("vendor/adminlte/dist/img/reconocimiento.png") }}');
         }
 
         .dark-mode {
+            
+            --certificado-bg-1: url('{{ asset("vendor/adminlte/dist/img/participacion.png") }}');
+            --certificado-bg-2: url('{{ asset("vendor/adminlte/dist/img/reconocimiento.png") }}');
+            --primary: #4a8c2a;
+            --secondary: #f8c537;
             --bg-color: #1a1a1a;
             --text-color: #e0e0e0;
-            --panel-bg: #2d2d2d;
-            --nombre-color: #c0c0c0;
+            --panel-bg: #2d3748;
+            --nombre-color: #f8c537;
             --tutor-color: #e0e0e0;
+            --border-color: #444;
+            --highlight-color: #f8c537;
+            --progress-bg: #f8c537;
+            --light: #2d3748;
+            --dark: #f5f7fa;
+            
+            --button-bg: #285430;
+            --button-hover: #112214;
+            --panel-bg:rgb(44, 65, 49);
+            --nombre-color: #000;
+            --secondary-color: #285430;
+            --tutor-color: #0d0e0d;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-            padding-bottom: 100px;
+            transition: background-color 0.5s, color 0.5s;
+            padding-bottom: 150px;
         }
 
         .generator-container {
@@ -46,6 +68,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
         }
 
         .fixed-buttons {
@@ -60,14 +83,16 @@
             z-index: 1000;
             display: flex;
             gap: 15px;
+            transition: all 0.5s;
         }
 
         .instructions {
-            background-color: rgba(44, 94, 26, 0.1);
+            background-color: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
             border-left: 5px solid var(--primary);
+            transition: all 0.5s;
         }
 
         .instructions h3 {
@@ -85,7 +110,7 @@
 
         .destacado {
             font-weight: bold;
-            color: var(--danger);
+            color: var(--highlight-color);
         }
 
         .design-selector {
@@ -101,6 +126,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             z-index: 100;
+            transition: all 0.5s;
         }
 
         .design-option {
@@ -141,11 +167,11 @@
         }
 
         .controls-section {
-            background: rgba(44, 94, 26, 0.05);
+            background: var(--panel-bg);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            background-color: var(--panel-bg);
+            transition: all 0.5s;
         }
 
         .control-group {
@@ -172,7 +198,7 @@
         }
 
         .btn:hover {
-            background-color: #3a7a24;
+            background-color: var(--dark);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
@@ -220,7 +246,7 @@
         }
 
         .file-input-label:hover {
-            background-color: #3a7a24;
+            background-color: var(--dark);
             transform: translateY(-2px);
         }
 
@@ -287,6 +313,7 @@
             animation: fadeIn 0.5s ease-out forwards;
         }
 
+        /* Botón de modo oscuro */
         #botonModoOscuro {
             position: fixed;
             top: 20px;
@@ -298,19 +325,20 @@
             z-index: 1000;
         }
 
-        #botonModoOscuro img {
+        #iconoTema {
             width: 40px;
             height: 40px;
-            transition: transform 0.3s ease;
+            transition: transform 0.5s, filter 0.3s;
         }
 
-        #botonModoOscuro:hover img {
+        #botonModoOscuro:hover #iconoTema {
+            filter: brightness(1.2);
             transform: scale(1.1);
         }
 
         /* Estilos para los certificados */
         .certificado-1 {
-            background-image: url('{{ asset("vendor/adminlte/dist/img/participacion.png") }}');
+            background-image: var(--certificado-bg-1);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -321,7 +349,7 @@
         }
 
         .certificado-2 {
-            background-image: url('{{ asset("vendor/adminlte/dist/img/reconocimiento.png") }}');
+            background-image: var(--certificado-bg-2);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -341,7 +369,7 @@
             text-align: center;
             font-family: 'Vivaldi', sans-serif;
             font-weight: bold;
-            color: #000;
+            color: var(--nombre-color);
             width: 80%;
         }
 
@@ -352,7 +380,7 @@
             transform: translate(-50%, -50%);
             font-size: 20px;
             text-align: center;
-            color: #000;
+            color: var(--nombre-color);
             width: 80%;
             line-height: 1.5;
         }
@@ -362,19 +390,61 @@
             top: 93%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1px;
+            font-size: 16px;
             text-align: center;
-            color: #000;
+            color: var(--nombre-color);
+        }
+
+        /* Estilos para el modal de carga */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-content {
+            background: var(--panel-bg);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            color: var(--text-color);
+            max-width: 80%;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: var(--progress-bg);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
         }
 
         @media (max-width: 768px) {
             .design-option {
                 width: 150px;
             }
+            
             .control-group {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            
             .fixed-buttons {
                 width: 90%;
                 flex-direction: column;
@@ -402,12 +472,23 @@
                 font-size: 12px;
                 top: 80%;
             }
+            
+            #botonModoOscuro {
+                top: 10px;
+                right: 10px;
+            }
+
+            #iconoTema {
+                width: 30px;
+                height: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="generator-container">
+    <!-- Botón de modo oscuro -->
     <button id="botonModoOscuro" onclick="alternarModoOscuro()">
         <img src="{{ asset('vendor/adminlte/dist/img/day.png') }}" alt="Modo Claro" id="iconoTema">
     </button>
@@ -416,6 +497,7 @@
         <i class="fas fa-certificate"></i> Generador de Certificados
     </h2>
 
+    <!-- Instrucciones -->
     <div class="instructions">
         <h3><i class="fas fa-info-circle"></i> Instrucciones de uso:</h3>
         <ol>
@@ -431,11 +513,11 @@
     <!-- Selector de diseño -->
     <div class="design-selector">
         <div class="design-option active" data-design="1">
-            <img src="{{ asset('vendor/adminlte/dist/img/participacion.png') }}" class="design-preview">
+            <img src="{{ asset('vendor/adminlte/dist/img/participacion.png') }}" class="design-preview" id="preview-design-1">
             <div class="design-name">Certificado de Participación</div>
         </div>
         <div class="design-option" data-design="2">
-            <img src="{{ asset('vendor/adminlte/dist/img/reconocimiento.png') }}" class="design-preview">
+            <img src="{{ asset('vendor/adminlte/dist/img/reconocimiento.png') }}" class="design-preview" id="preview-design-2">
             <div class="design-name">Certificado de Reconocimiento</div>
         </div>
     </div>
@@ -471,7 +553,7 @@
     <!-- Vista previa del certificado -->
     <div class="certificado-preview-container">
         <img src="{{ asset('vendor/adminlte/dist/img/participacion.png') }}" id="certificado-preview" class="certificado-preview">
-        <div style="margin-top: 10px; font-style: italic; color: var(--text-color);">Vista previa del diseño seleccionado</div>
+        <div style="margin-top: 10px; font-style: italic; color: var(--text-color); opacity: 0.8;">Vista previa del diseño seleccionado</div>
     </div>
 
     <!-- Certificados generados -->
@@ -514,6 +596,10 @@
         '1': 'vendor/adminlte/dist/img/participacion.png',
         '2': 'vendor/adminlte/dist/img/reconocimiento.png'
     };
+    const imagenesDisenosDark = {
+        '1': 'vendor/adminlte/dist/img/participacion.png',
+        '2': 'vendor/adminlte/dist/img/reconocimiento.png'
+    };
 
     // Plantillas de generación para cada diseño
     const plantillasGeneracion = {
@@ -541,7 +627,7 @@
                 document.querySelectorAll('.design-option').forEach(opt => opt.classList.remove('active'));
                 this.classList.add('active');
                 diseñoActual = this.getAttribute('data-design');
-                document.getElementById('certificado-preview').src = imagenesDisenos[diseñoActual];
+                actualizarVistaPrevia();
             });
         });
 
@@ -558,13 +644,33 @@
         // Verificar modo oscuro al cargar
         if (localStorage.getItem('modoOscuro') === 'true') {
             document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            actualizarVistaPrevia();
         }
     });
+
+    function actualizarVistaPrevia() {
+        const modoOscuro = document.body.classList.contains('dark-mode');
+        const imagen = modoOscuro ? imagenesDisenosDark[diseñoActual] : imagenesDisenos[diseñoActual];
+        document.getElementById('certificado-preview').src = imagen;
+        document.getElementById(`preview-design-${diseñoActual}`).src = imagen;
+    }
 
     function alternarModoOscuro() {
         document.body.classList.toggle('dark-mode');
         const modoOscuroActivado = document.body.classList.contains('dark-mode');
         localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            icono.style.transform = 'rotate(360deg)';
+        } else {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
+            icono.style.transform = 'rotate(0deg)';
+        }
+        
+        actualizarVistaPrevia();
     }
 
     function procesarArchivoCSV(archivo) {
@@ -664,40 +770,6 @@
             alert("Error al generar el certificado");
         }
     }
-    
-    async function descargarTodos() {
-        try {
-            const archivoZip = new JSZip();
-            const certificados = await Promise.all(participantes.map(async (participante, indice) => {
-                const elemento = document.getElementById(`certificado-${participante.id}`);
-                const lienzo = await html2canvas(elemento, { 
-                    scale: 2,
-                    logging: false,
-                    backgroundColor: null,
-                    useCORS: true,
-                    allowTaint: true
-                });
-                return {
-                    nombre: `Certificado_${participante.nombre.replace(/ /g, '_')}.png`,
-                    datos: lienzo.toDataURL('image/png')
-                };
-            }));
-            
-            certificados.forEach(certificado => {
-                const datosBase64 = certificado.datos.split(',')[1];
-                archivoZip.file(certificado.nombre, datosBase64, { base64: true });
-            });
-
-            const contenido = await archivoZip.generateAsync({ type: "blob" });
-            const enlace = document.createElement('a');
-            enlace.href = URL.createObjectURL(contenido);
-            enlace.download = "Certificados.zip";
-            enlace.click();
-        } catch (error) {
-            console.error('Error al generar ZIP:', error);
-            alert("Error al generar el archivo ZIP");
-        }
-    }
 
     function refrescarCertificados() {
         if (participantes.length > 0) {
@@ -719,6 +791,105 @@
             document.getElementById('archivoCSV').value = '';
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
+    async function descargarTodos() {
+        try {
+            // Crear overlay de carga
+            const overlay = document.createElement('div');
+            overlay.className = 'loading-overlay';
+            overlay.innerHTML = `
+                <div class="loading-content">
+                    <h3>Generando archivo ZIP</h3>
+                    <p>Por favor espere, esto puede tomar varios minutos...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="zip-progress"></div>
+                    </div>
+                    <p id="progress-text">0/${participantes.length} certificados procesados</p>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            botonDescargar.disabled = true;
+            botonDescargar.textContent = 'Generando...';
+            
+            const archivoZip = new JSZip();
+            const folder = archivoZip.folder("Certificados");
+            const progressBar = document.getElementById('zip-progress');
+            const progressText = document.getElementById('progress-text');
+            
+            // Procesar en lotes de 3 para mejor rendimiento
+            const batchSize = 3;
+            let processed = 0;
+            
+            for (let i = 0; i < participantes.length; i += batchSize) {
+                const batch = participantes.slice(i, i + batchSize);
+                const batchPromises = batch.map(async (participante, batchIndex) => {
+                    const indice = i + batchIndex;
+                    const elemento = document.getElementById(`certificado-${indice}`);
+                    
+                    const lienzo = await html2canvas(elemento, { 
+                        useCORS: true, 
+                        scale: 1.5,
+                        backgroundColor: null,
+                        logging: false
+                    });
+                    
+                    return {
+                        nombre: `Certificado_${participante.nombre.replace(/ /g, '_')}.png`,
+                        datos: lienzo.toDataURL('image/png', 0.8)
+                    };
+                });
+                
+                const batchResults = await Promise.all(batchPromises);
+                
+                batchResults.forEach(certificado => {
+                    const datosBase64 = certificado.datos.split(',')[1];
+                    folder.file(certificado.nombre, datosBase64, { base64: true });
+                });
+                
+                processed = Math.min(i + batchSize, participantes.length);
+                const progressPercent = (processed / participantes.length) * 100;
+                
+                progressBar.style.width = `${progressPercent}%`;
+                progressText.textContent = `${processed}/${participantes.length} certificados procesados`;
+                
+                // Pequeña pausa entre lotes para evitar bloqueo del navegador
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Compresión mejorada
+            const contenido = await archivoZip.generateAsync({ 
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
+            });
+            
+            const enlace = document.createElement('a');
+            enlace.href = URL.createObjectURL(contenido);
+            enlace.download = "Certificados.zip";
+            enlace.click();
+            
+            // Limpiar
+            document.body.removeChild(overlay);
+            botonDescargar.disabled = false;
+            botonDescargar.textContent = 'Descargar Todos (ZIP)';
+            
+        } catch (error) {
+            console.error('Error al generar ZIP:', error);
+            alert("Error al generar el archivo ZIP. Por favor intente con menos certificados o recargue la página.");
+            
+            // Limpiar en caso de error
+            const overlay = document.querySelector('.loading-overlay');
+            if (overlay) document.body.removeChild(overlay);
+            
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            if (botonDescargar) {
+                botonDescargar.disabled = false;
+                botonDescargar.textContent = 'Descargar Todos (ZIP)';
+            }
         }
     }
 </script>

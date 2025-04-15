@@ -12,14 +12,36 @@
             --light: #f5f7fa;
             --dark: #1e293b;
             --hover-yellow: #f9ff32;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --panel-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --bubble-color: rgba(44, 94, 26, 0.2);
+            --bubble-size: 1;
+            --bubble-speed: 15s;
+            --bubble-blur: 0px;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --panel-bg: #2d2d2d;
+            --light: #2d3748;
+            --dark: #f5f7fa;
+            --card-bg: #2d3748;
+            --bubble-color: rgba(248, 197, 55, 0.4);
+            --bubble-size: 1.5;
+            --bubble-speed: 8s;
+            --bubble-blur: 2px;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s, color 0.5s;
             margin: 0;
             padding: 0;
-            background-color: var(--light);
-            color: var(--dark);
             overflow-x: hidden;
         }
 
@@ -71,7 +93,6 @@
             font-size: 1rem;
             font-weight: 600;
             text-decoration: none;
-            cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
@@ -88,7 +109,7 @@
             filter: drop-shadow(2px 2px 4px rgba(247, 242, 242, 0.3));
         }
 
-        /* Elementos flotantes */
+        /* Elementos flotantes - Burbujas */
         .floating-elements {
             position: absolute;
             top: 0;
@@ -101,21 +122,84 @@
 
         .floating-element {
             position: absolute;
-            background-color: rgba(255,255,255,0.1);
+            background-color: var(--bubble-color);
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            animation: float var(--bubble-speed) infinite linear;
+            transition: all 0.3s ease-out;
+            filter: blur(var(--bubble-blur));
+            transform: scale(var(--bubble-size));
+            box-shadow: 0 0 10px currentColor;
+            cursor: pointer;
+            user-select: none;
         }
 
         .floating-element:hover {
-            background-color: var(--hover-yellow);
+            animation-play-state: paused;
         }
 
+        .floating-element.exploding {
+            animation: none;
+            transform: scale(2);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Partículas de explosión */
+        .particle {
+            position: absolute;
+            background-color: #ffeb3b;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 20;
+            box-shadow: 0 0 10px #fff;
+            transform: translate(0, 0) scale(1);
+        }
+
+        /* Onda expansiva */
+        .shockwave {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,235,59,0.8) 0%, rgba(255,235,59,0) 70%);
+            z-index: 10;
+            transform: scale(0);
+            animation: shockwave 1s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* Animaciones */
         @keyframes float {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translateY(0) rotate(0deg) scale(var(--bubble-size));
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(-1000px) rotate(720deg);
+                transform: translateY(-1000px) rotate(720deg) scale(var(--bubble-size));
+                opacity: 0;
+            }
+        }
+
+        @keyframes particle-explosion {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        @keyframes shockwave {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
             }
         }
 
@@ -172,166 +256,6 @@
             50% { border-color: var(--secondary) }
         }
 
-        /* Dashboard de diplomas */
-        .dashboard {
-            max-width: 1200px;
-            margin: 20px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-            text-align: center;
-        }
-
-        .buscador {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 30px;
-            border: 2px solid #ddd;
-            border-radius: 50px;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .buscador:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
-        }
-
-        /* Galería de diplomas */
-        .contenedor-diplomas {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .diploma-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        /* Contenedor de imagen con efecto 3D */
-        .imagen-container {
-            width: 300px;
-            height: 200px;
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            transform-style: preserve-3d;
-            transition: transform 0.1s;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .imagen-container:nth-child(1) { animation-delay: 0.1s; }
-        .imagen-container:nth-child(2) { animation-delay: 0.2s; }
-        .imagen-container:nth-child(3) { animation-delay: 0.3s; }
-        .imagen-container:nth-child(4) { animation-delay: 0.4s; }
-        .imagen-container:nth-child(5) { animation-delay: 0.5s; }
-
-        .imagen-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .imagen-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            padding: 12px;
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-
-        .imagen-container:hover .imagen-info {
-            transform: translateY(0);
-        }
-
-        .imagen-titulo {
-            font-size: 16px;
-            text-align: center;
-            margin: 0;
-        }
-
-        /* Botón de generación */
-        .boton-link {
-            display: inline-block;
-            padding: 12px 25px;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-            white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .boton-link:hover {
-            background: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        /* Lightbox */
-        .modal-lightbox {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            cursor: zoom-out;
-        }
-
-        .imagen-ampliada {
-            max-height: 90vh;
-            max-width: 90vw;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
-        }
-
-        .cerrar-lightbox {
-            position: absolute;
-            top: 30px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            cursor: pointer;
-            z-index: 10001;
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .saludo {
@@ -347,34 +271,27 @@
             .stat-item {
                 width: 80%;
             }
-            
-            .diploma-item {
-                flex-direction: column;
-            }
-            
-            .imagen-container {
-                width: 100%;
-            }
-            
-            .boton-link {
-                width: 100%;
-                text-align: center;
-            }
         }
     </style>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
+<!-- Botón de modo oscuro -->
+<button id="botonModoOscuro" onclick="alternarModoOscuro()" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: transparent; border: none;">
+    <img src="<?php echo e(asset('vendor/adminlte/dist/img/day.png')); ?>" alt="Modo Claro" id="iconoTema" width="40" height="40" style="transition: transform 0.5s;">
+</button>
+
 <div class="welcome-container">
-    <div class="floating-elements">
-        <!-- Elementos flotantes generados dinámicamente -->
+    <div class="floating-elements" id="bubbles-container">
+        <!-- Burbujas generadas dinámicamente -->
     </div>
     
     <div class="welcome-content">
         <img src="<?php echo e(asset('vendor/adminlte/dist/img/AdminLTELogo.png')); ?>" alt="Logo Cooperativa Talanga" class="logo">
         <h1 class="saludo">Bienvenido a Cooperativa de Ahorro y Credito <span class="typing-effect">"Talanga" Limitada</span></h1>
         <p>Tu aliado financiero para un futuro más próspero. Juntos crecemos, juntos prosperamos.</p>
-        <a href="<?php echo e(url('generador')); ?>" class="btn">Acceder al Generador</a>
+        <a href="<?php echo e(url('generacion')); ?>" class="btn">DIPLOMAS</a>
+        <a href="<?php echo e(url('generacionCertificados')); ?>" class="btn">CERTIFICADOS</a>
         
         <div class="stats-container">
             <div class="stat-item">
@@ -390,149 +307,145 @@
     </div>
 </div>
 
-<div class="dashboard">
-    <h2><i class="fas fa-certificate"></i> Diplomas Disponibles</h2>
-    
-    <input type="text" id="buscador-diplomas" placeholder="Buscar diploma..." class="buscador">
-    
-    <div class="contenedor-diplomas">
-        <!-- Diploma 1 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/diploma.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/diploma.png')); ?>" 
-                     alt="Diploma Básico" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Diploma Básico</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('generador')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar Diploma 1
-            </a>
-        </div>
-        
-           <!-- Diploma 5 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/general2.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/general2.png')); ?>" 
-                     alt="Diploma General" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Diploma General</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('general')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar Diploma General 2
-            </a>
-        </div> 
-
-        <!-- Diploma 2 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/juventud.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/juventud.png')); ?>" 
-                     alt="Diploma Juventud" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Comité de Juventud</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('juventud')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar diploma para Comite de Juventud
-            </a>
-        </div>
-        
-        <!-- Diploma 3 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/genero.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/genero.png')); ?>" 
-                     alt="Diploma Género" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Comité de Género</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('genero')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar diploma para Comite de Genero
-            </a>
-        </div>
-        
-        <!-- Diploma 4 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/educacion.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/educacion.png')); ?>" 
-                     alt="Diploma Educación" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Comité de Educación</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('educacion')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar Diploma para Comite de Educacion
-            </a>
-        </div>
-        
-        <!-- Diploma 5 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/reconocimiento.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/reconocimiento.png')); ?>" 
-                     alt="Certificado Reconocimiento" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Certificado Reconocimiento (extenso)</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('reconocimiento')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar Certificado Reconocimiento(extenso)
-            </a>
-        </div>
-
-        <!-- Diploma 6 -->
-        <div class="diploma-item">
-            <div class="imagen-container" 
-                 data-img="<?php echo e(asset('vendor/adminlte/dist/img/participacion.png')); ?>">
-                <img src="<?php echo e(asset('vendor/adminlte/dist/img/participacion.png')); ?>" 
-                     alt="Certificado para Participantes(extenso)" 
-                     class="imagen-preview">
-                <div class="imagen-info">
-                    <div class="imagen-titulo">Certificado para Participantes(extenso)</div>
-                </div>
-            </div>
-            <a href="<?php echo e(url('participacion')); ?>" class="boton-link">
-                <i class="fas fa-download"></i> Generar Certificado para Participantes(extenso)
-            </a>
-        </div>
-        
-    </div>
-</div>
+<!-- Resto del contenido... -->
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
 <script>
-    // Generar elementos flotantes
-    const floatingContainer = document.querySelector('.floating-elements');
-    for (let i = 0; i < 30; i++) {
-        const element = document.createElement('div');
-        element.classList.add('floating-element');
+    // Variables globales
+    let bubbles = [];
+
+    // Generar burbujas
+    function generarBurbujas() {
+        const bubblesContainer = document.getElementById('bubbles-container');
+        bubblesContainer.innerHTML = '';
+        bubbles = [];
         
-        const size = Math.random() * 100 + 20;
-        const posX = Math.random() * 100;
-        const delay = Math.random() * 8;
-        const duration = Math.random() * 5 + 5;
+        const bubbleCount = 25;
+        const colors = document.body.classList.contains('dark-mode') 
+            ? ['rgba(248, 197, 55, 0.6)', 'rgba(249, 255, 50, 0.5)', 'rgba(255, 215, 0, 0.5)']
+            : ['rgba(44, 94, 26, 0.3)', 'rgba(76, 154, 42, 0.3)', 'rgba(106, 176, 76, 0.3)'];
         
-        element.style.width = `${size}px`;
-        element.style.height = `${size}px`;
-        element.style.left = `${posX}%`;
-        element.style.bottom = `-${size}px`;
-        element.style.animationDelay = `${delay}s`;
-        element.style.animationDuration = `${duration}s`;
+        for (let i = 0; i < bubbleCount; i++) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('floating-element');
+            
+            const size = Math.random() * 80 + 40;
+            const posX = Math.random() * 100;
+            const delay = Math.random() * 5;
+            const duration = (Math.random() * 10 + 5) * (document.body.classList.contains('dark-mode') ? 0.7 : 1);
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${posX}%`;
+            bubble.style.bottom = `-${size}px`;
+            bubble.style.animationDelay = `${delay}s`;
+            bubble.style.animationDuration = `${duration}s`;
+            bubble.style.backgroundColor = color;
+            bubble.dataset.color = color;
+            
+            if (document.body.classList.contains('dark-mode')) {
+                bubble.style.boxShadow = `0 0 20px ${color}`;
+                bubble.style.filter = 'blur(1px)';
+            }
+            
+            bubble.addEventListener('click', function() {
+                explotarBurbuja(bubble);
+            });
+            
+            bubblesContainer.appendChild(bubble);
+            bubbles.push(bubble);
+        }
+    }
+
+    // Función para explotar burbujas
+    function explotarBurbuja(bubble) {
+        const rect = bubble.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
         
-        floatingContainer.appendChild(element);
+        // Crear onda expansiva
+        const shockwave = document.createElement('div');
+        shockwave.classList.add('shockwave');
+        shockwave.style.width = `${size}px`;
+        shockwave.style.height = `${size}px`;
+        shockwave.style.left = `${rect.left}px`;
+        shockwave.style.top = `${rect.top}px`;
+        document.body.appendChild(shockwave);
+        
+        // Animación de explosión
+        bubble.classList.add('exploding');
+        
+        // Crear partículas
+        crearParticulas(centerX, centerY, size, bubble.dataset.color);
+        
+        // Eliminar elementos después de la animación
+        setTimeout(() => {
+            bubble.remove();
+            shockwave.remove();
+        }, 500);
+    }
+
+    // Crear partículas de explosión
+    function crearParticulas(x, y, size, color) {
+        const container = document.getElementById('bubbles-container');
+        const particleCount = Math.min(20, Math.floor(size / 4));
+        const baseColor = color || '#ffeb3b';
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            const particleSize = Math.random() * 10 + 5;
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * size * 0.8 + 30;
+            const duration = Math.random() * 0.6 + 0.4;
+            
+            particle.style.width = `${particleSize}px`;
+            particle.style.height = `${particleSize}px`;
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.backgroundColor = baseColor;
+            
+            // Variación de color para algunas partículas
+            if (Math.random() > 0.7) {
+                particle.style.backgroundColor = '#ff9800'; // Naranja
+            }
+            
+            // Animación
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.animation = `particle-explosion ${duration}s forwards`;
+            
+            container.appendChild(particle);
+            
+            // Eliminar partícula después de la animación
+            setTimeout(() => {
+                particle.remove();
+            }, duration * 1000);
+        }
+    }
+
+    // Modo oscuro
+    function alternarModoOscuro() {
+        document.body.classList.toggle('dark-mode');
+        const modoOscuroActivado = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "<?php echo e(asset('vendor/adminlte/dist/img/night.png')); ?>";
+            icono.style.transform = 'rotate(360deg)';
+        } else {
+            icono.src = "<?php echo e(asset('vendor/adminlte/dist/img/day.png')); ?>";
+            icono.style.transform = 'rotate(0deg)';
+        }
+        
+        generarBurbujas();
     }
 
     // Animación de contadores
@@ -557,79 +470,17 @@
         window.requestAnimationFrame(step);
     }
 
-    // Iniciar animaciones de contadores
-    animateValue('members-count', 0, 7000, 2000, '+', '');
-    animateValue('years-active', 0, 56, 2000, '', ' años');
-
-    // Efecto Tilt 3D para diplomas
-    document.querySelectorAll('.imagen-container').forEach(container => {
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = container.offsetWidth / 2;
-            const centerY = container.offsetHeight / 2;
-            
-            const angleX = (y - centerY) / 15;
-            const angleY = (centerX - x) / 15;
-            
-            container.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-            container.querySelector('.imagen-preview').style.transform = 'scale(1.05)';
-        });
-
-        container.addEventListener('mouseleave', () => {
-            container.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-            container.querySelector('.imagen-preview').style.transform = 'scale(1)';
-        });
-    });
-
-    // Filtro de búsqueda
-    document.getElementById('buscador-diplomas').addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        document.querySelectorAll('.diploma-item').forEach(item => {
-            const title = item.querySelector('.imagen-titulo').textContent.toLowerCase();
-            if (title.includes(searchTerm)) {
-                item.style.display = 'flex';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-
-    // Lightbox
-    document.querySelectorAll('.imagen-container').forEach(container => {
-        container.addEventListener('click', (e) => {
-            const imgSrc = container.getAttribute('data-img');
-            const modal = document.createElement('div');
-            modal.className = 'modal-lightbox';
-            
-            modal.innerHTML = `
-                <img src="${imgSrc}" class="imagen-ampliada">
-                <span class="cerrar-lightbox">&times;</span>
-            `;
-            
-            document.body.appendChild(modal);
-            
-            // Cerrar lightbox
-            modal.querySelector('.cerrar-lightbox').addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.remove();
-            });
-        });
-    });
-
-    
-</script>
-<?php $__env->stopSection(); ?>
-
-<?php $__env->startSection('css'); ?>
-    <style>
-        .sidebar {
-            font-size: 14px;
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('modoOscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "<?php echo e(asset('vendor/adminlte/dist/img/night.png')); ?>";
         }
-    </style>
+        
+        generarBurbujas();
+        animateValue('members-count', 0, 7000, 2000, '+', '');
+        animateValue('years-active', 0, 56, 2000, '', ' años');
+    });
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\CertificadosCoopTal\resources\views/dashboard.blade.php ENDPATH**/ ?>

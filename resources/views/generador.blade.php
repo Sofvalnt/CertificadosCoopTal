@@ -32,9 +32,22 @@
             --button-bg: #285430;
             --button-hover: #112214;
             --panel-bg: #bdf1c6;
-            --nombre-color: #2c3e50;
+            --nombre-color: #000;
             --secondary-color: #285430;
             --tutor-color: #0d0e0d;
+            --diploma-bg: url('vendor/adminlte/dist/img/diploma.png');
+        }
+
+        .dark-mode {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --button-bg: #285430;
+            --button-hover: #112214;
+            --panel-bg:rgb(20, 29, 22);
+            --nombre-color: #000;
+            --secondary-color: #285430;
+            --tutor-color: #0d0e0d;
+            --diploma-bg: url('vendor/adminlte/dist/img/diploma.png');
         }
 
         body {
@@ -42,18 +55,21 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             padding-bottom: 100px;
+            transition: background-color 0.5s, color 0.5s;
         }
 
         .instrucciones {
-            background-color: #f9f9f9;
-            border-left: 4px solid #3498db;
+            background-color: var(--panel-bg);
+            border-left: 4px solid var(--button-bg);
             padding: 15px;
             margin-bottom: 20px;
+            border-radius: 5px;
+            transition: all 0.5s;
         }
         
         .destacado {
             font-weight: bold;
-            color: #e74c3c;
+            color: var(--secondary-color);
         }
 
         .contenedor-imagen {
@@ -64,10 +80,10 @@
         }
         
         .marco-imagen {
-            border: 8px solid #ddd;
+            border: 8px solid var(--panel-bg);
             border-radius: 10px;
             padding: 10px;
-            background-color: #f5f5f5;
+            background-color: var(--panel-bg);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
             max-width: 400px;
@@ -75,7 +91,7 @@
         }
         
         .marco-imagen:hover {
-            border-color: #4CAF50;
+            border-color: var(--button-bg);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transform: scale(1.02);
         }
@@ -95,7 +111,7 @@
             text-align: center;
             margin-top: 10px;
             font-style: italic;
-            color: #666;
+            color: var(--text-color);
         }
 
         #botonDescargarTodos {
@@ -103,7 +119,7 @@
         }
 
         .diploma {
-            background-image: url('vendor/adminlte/dist/img/diploma.png');
+            background-image: var(--diploma-bg);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -197,6 +213,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            transition: all 0.5s;
         }
 
         .grupo-botones {
@@ -207,6 +224,11 @@
 
         input[type="file"] {
             margin: 10px 0;
+            background: var(--bg-color);
+            color: var(--text-color);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--button-bg);
         }
 
         button {
@@ -247,7 +269,6 @@
             background: var(--button-hover);
         }
 
-        /* Añadir estilo para el modal de carga */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -262,23 +283,24 @@
         }
         
         .loading-content {
-            background: white;
+            background: var(--panel-bg);
             padding: 30px;
             border-radius: 10px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            color: var(--text-color);
         }
         
         .progress-bar {
             width: 100%;
-            background-color: #f1f1f1;
+            background-color: var(--bg-color);
             border-radius: 5px;
             margin: 15px 0;
         }
         
         .progress {
             height: 20px;
-            background-color: #285430;
+            background-color: var(--button-bg);
             border-radius: 5px;
             width: 0%;
             transition: width 0.3s;
@@ -326,6 +348,11 @@
 </head>
 <body>
 
+<!-- Botón de modo oscuro -->
+<button id="botonModoOscuro" onclick="alternarModoOscuro()" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: transparent; border: none;">
+    <img src="{{ asset('vendor/adminlte/dist/img/day.png') }}" alt="Modo Claro" id="iconoTema" width="40" height="40" style="transition: transform 0.5s;">
+</button>
+
 <div class="contenedor-imagen">
     <div class="marco-imagen">
         <img src="vendor/adminlte/dist/img/diploma.png" alt="Imagen" class="imagen-interactiva" id="certificado-preview">
@@ -351,19 +378,60 @@
 <script>
     let estudiantes = [];
     let metadatos = {
+        cooperativa: 'Cooperativa de Ahorro y Crédito Talanga LTDA',
         curso: '',
         tutor: '',
-        fechaFinalizacion: '',
         modalidad: '',
-        duracion: ''
+        duracion: '',
+        fechaFinalizacion: ''
     };
 
+    // Función para alternar modo oscuro
+    function alternarModoOscuro() {
+        document.body.classList.toggle('dark-mode');
+        const modoOscuroActivado = document.body.classList.contains('dark-mode');
+        localStorage.setItem('modoOscuro', modoOscuroActivado);
+        
+        const icono = document.getElementById('iconoTema');
+        if (modoOscuroActivado) {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            icono.style.transform = 'rotate(360deg)';
+            // Cambiar imagen de vista previa
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/diploma.png";
+        } else {
+            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
+            icono.style.transform = 'rotate(0deg)';
+            // Cambiar imagen de vista previa
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/diploma.png";
+        }
+    }
+
+    // Verificar modo oscuro al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('modoOscuro') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
+            document.getElementById('certificado-preview').src = "vendor/adminlte/dist/img/diploma.png";
+        }
+    });
+
     function descargarPlantilla() {
-        const contenido = `Curso:;Nombre del curso
+        const contenido = `Cooperativa de Ahorro y Crédito Talanga LTDA
+
+INSTRUCCIONES:
+1. Complete los datos del curso abajo
+2. Escriba los nombres de los participantes en la lista
+3. No use tildes ni modifique la estructura
+4. Guarde el archivo como CSV (delimitado por punto y coma)
+
+Curso:;Nombre del curso
 Tutor:;Nombre del tutor
-Fecha de finalizacion:;DD/MM/AAAA
+Tipo Documento:;Certificado
 Modalidad:;Presencial/Virtual
 Duracion:;X horas
+Fecha de finalizacion:;DD/MM/AAAA
+
+Alumnos Aprobados
 Nombre;Nota Final
 Nombre Apellido1 Apellido2;
 Nombre Apellido1 Apellido2;`;
@@ -384,29 +452,50 @@ Nombre Apellido1 Apellido2;`;
             const lineas = texto.split('\n').map(linea => linea.trim());
             
             // Extraer metadatos
-            lineas.forEach(linea => {
-                const celdas = linea.split(';').map(c => c.trim());
-                if (celdas[0] === 'Curso:') metadatos.curso = celdas[1] || 'No especificado';
-                if (celdas[0] === 'Tutor:') metadatos.tutor = celdas[1] || 'No especificado';
-                if (celdas[0] === 'Fecha de finalizacion:') metadatos.fechaFinalizacion = celdas[1] || 'No especificada';
-                if (celdas[0] === 'Modalidad:') metadatos.modalidad = celdas[1] || 'No especificada';
-                if (celdas[0] === 'Duracion:') metadatos.duracion = celdas[1] || 'No especificada';
-            });
+            for (let i = 0; i < lineas.length; i++) {
+                const linea = lineas[i];
+                if (linea.startsWith('Curso:')) {
+                    metadatos.curso = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Tutor:')) {
+                    metadatos.tutor = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Tipo Documento:')) {
+                    metadatos.tipoDocumento = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Modalidad:')) {
+                    metadatos.modalidad = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Duracion:')) {
+                    metadatos.duracion = linea.split(';')[1] || '';
+                } else if (linea.startsWith('Fecha de finalizacion:')) {
+                    metadatos.fechaFinalizacion = linea.split(';')[1] || '';
+                }
+            }
 
             // Buscar inicio de la lista de estudiantes
             estudiantes = [];
-            for (let i = 0; i < lineas.length; i++) {
-                if (lineas[i] && !lineas[i].includes('Nombre del participante') && 
-                    !lineas[i].includes('Nota Final') &&
-                    !lineas[i].includes('INSTRUCCIONES') &&
-                    !lineas[i].includes('Curso:') &&
-                    !lineas[i].includes('Tutor:') &&
-                    !lineas[i].includes('Fecha de finalizacion:') &&
-                    !lineas[i].includes('Modalidad:') &&
-                    !lineas[i].includes('Duracion:')) {
+            let encontroEncabezado = false;
+            let finDeLista = false;
+            
+            for (let i = 0; i < lineas.length && !finDeLista; i++) {
+                const linea = lineas[i];
+                
+                // Buscar el encabezado de la lista de estudiantes
+                if (linea.includes('Nombre;Nota Final')) {
+                    encontroEncabezado = true;
+                    continue;
+                }
+                
+                // Si encontramos el encabezado, procesar estudiantes
+                if (encontroEncabezado) {
+                    const celdas = linea.split(';');
+                    const nombre = celdas[0]?.trim();
                     
-                    const nombre = lineas[i].split(';')[0].trim();
-                    if (nombre) {
+                    // Detener si encontramos una línea vacía o con ===
+                    if (linea === '' || linea.startsWith('===') || linea.startsWith(';;')) {
+                        finDeLista = true;
+                        continue;
+                    }
+                    
+                    // Solo procesar si hay un nombre válido (no vacío y no solo espacios o caracteres especiales)
+                    if (nombre && nombre.length > 0 && !/^[;=\s]+$/.test(nombre)) {
                         estudiantes.push({
                             nombreCompleto: nombre,
                             ...metadatos,

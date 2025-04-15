@@ -130,7 +130,10 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
+    @push('css')
+    
+    <link rel="stylesheet" href="{{ asset('css/adminlte-custom.css') }}">
+@endpush
 </body>
 
 </html>

@@ -47,6 +47,9 @@
             <?php echo $__env->make('adminlte::partials.sidebar.right-sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
 
+        <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+    <?php echo csrf_field(); ?>
+</form>
     </div>
 <?php $__env->stopSection(); ?>
 

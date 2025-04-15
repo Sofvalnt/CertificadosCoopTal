@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'title' => 'Certificados',
+    'title' => 'Certificados/Diplomas',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -111,9 +111,9 @@ return [
     'usermenu_enabled' => true,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
-    'usermenu_image' => true,
-    'usermenu_desc' => true,
-    'usermenu_profile_url' => true,
+    'usermenu_image' => false,
+    'usermenu_desc' => false,
+    'usermenu_profile_url' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -344,21 +344,21 @@ return [
         'target' => '_blank'
     ],
     
-    // Botón de Cerrar Sesión
-    [
-        'text' => 'Cerrar Sesión',
-        'url' => '#', // Prevent default link behavior'text' => 'Cerrar Sesión',
-        'url' => '#',
-        'icon' => 'fas fa-fw fa-sign-out-alt',
-        'class' => 'logout-btn',
-        'topnav_right' => true,
-        'route' => 'logout',
-        'method' => 'POST', // Para Laravel
-        'onclick' => 'event.preventDefault(); document.getElementById("logout-form").submit();',
-
-       ],
+   // Separador antes del botón de cerrar sesión
+   [
+    'header' => 'CUENTA',
+    'classes' => 'mt-auto' // Esto empuja el contenido hacia abajo
 ],
 
+// Botón de Cerrar Sesión en el sidebar
+[
+    'text' => 'Cerrar Sesión',
+    'url' => '#',
+    'icon' => 'fas fa-fw fa-sign-out-alt',
+    'class' => 'logout-sidebar-btn',
+    'onclick' => 'event.preventDefault(); confirmLogout();',
+],
+],
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
