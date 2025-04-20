@@ -29,6 +29,10 @@
         }
 
         .dark-mode {
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             --certificado-bg-1: url('{{ asset("vendor/adminlte/dist/img/participacion.png") }}');
             --certificado-bg-2: url('{{ asset("vendor/adminlte/dist/img/reconocimiento.png") }}');
             --primary: #4a8c2a;
@@ -43,6 +47,10 @@
             --progress-bg: #f8c537;
             --light: #2d3748;
             --dark: #f5f7fa;
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             --button-bg: #285430;
             --button-hover: #112214;
             --panel-bg:rgb(44, 65, 49);
@@ -433,6 +441,7 @@
             transition: width 0.3s;
         }
 
+<<<<<<< HEAD
         /* Estilos para grupos de descarga */
         .download-group {
             margin: 20px 0;
@@ -441,6 +450,8 @@
             border-radius: 10px;
         }
 
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
         @media (max-width: 768px) {
             .design-option {
                 width: 150px;
@@ -514,7 +525,10 @@
             <li>Haz clic en "Generar Certificados"</li>
             <li>Descarga los diplomas individualmente o todos juntos en un ZIP</li>
         </ol>
+<<<<<<< HEAD
         <p class="destacado">Para más de 100 certificados, se generarán múltiples archivos ZIP automáticamente.</p>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     </div>
 
     <!-- Selector de diseño -->
@@ -579,6 +593,7 @@
         </div>
         
         <div id="contenedor-certificados"></div>
+<<<<<<< HEAD
         
         <!-- Sección para grupos de descarga cuando hay muchos certificados -->
         <div id="download-groups" style="display: none;">
@@ -586,6 +601,8 @@
                 Grupos de Descarga
             </h4>
         </div>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     </div>
 </div>
 
@@ -600,7 +617,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
 
 <script>
     // Variables globales
@@ -762,6 +782,7 @@
         document.getElementById('generated-certificates').style.display = 'block';
         document.getElementById('botonGenerar').disabled = true;
         
+<<<<<<< HEAD
         // Mostrar opción de grupos si hay muchos certificados
         if (participantes.length > 100) {
             document.getElementById('download-groups').style.display = 'block';
@@ -801,6 +822,11 @@
         await generarYDescargarZIP(grupo, `Certificados_${start + 1}-${Math.min(end, participantes.length)}`);
     }
 
+=======
+        document.getElementById('generated-certificates').scrollIntoView({ behavior: 'smooth' });
+    }
+
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     async function descargarCertificado(indice) {
         try {
             const elemento = document.getElementById(`certificado-${participantes[indice].id}`);
@@ -813,7 +839,11 @@
             });
             
             const enlace = document.createElement('a');
+<<<<<<< HEAD
             enlace.download = `Certificado_${participantes[indice].nombre.replace(/[^a-z0-9]/gi, '_')}.png`;
+=======
+            enlace.download = `Certificado_${participantes[indice].nombre.replace(/ /g, '_')}.png`;
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             enlace.href = lienzo.toDataURL('image/png');
             enlace.click();
         } catch (error) {
@@ -835,8 +865,11 @@
         if (confirm("¿Estás seguro de que deseas eliminar todos los certificados generados?")) {
             document.getElementById('contenedor-certificados').innerHTML = '';
             document.getElementById('botonDescargarTodos').style.display = 'none';
+<<<<<<< HEAD
             document.getElementById('generated-certificates').style.display = 'none';
             document.getElementById('download-groups').style.display = 'none';
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             document.getElementById('botonGenerar').disabled = false;
             participantes = [];
             textoCertificado = '';
@@ -848,6 +881,7 @@
     }
 
     async function descargarTodos() {
+<<<<<<< HEAD
         if (participantes.length > 100) {
             if (confirm(`Para mejor rendimiento con ${participantes.length} certificados, se generarán múltiples archivos ZIP. ¿Continuar?`)) {
                 crearBotonesGruposDescarga();
@@ -863,10 +897,15 @@
     async function generarYDescargarZIP(participantesGrupo, nombreArchivo) {
         try {
             // Configurar overlay de carga
+=======
+        try {
+            // Crear overlay de carga
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             const overlay = document.createElement('div');
             overlay.className = 'loading-overlay';
             overlay.innerHTML = `
                 <div class="loading-content">
+<<<<<<< HEAD
                     <h3>Generando archivo ZIP (${participantesGrupo.length} certificados)</h3>
                     <p>Por favor espere, esto puede tomar tiempo...</p>
                     <div class="progress-bar-container">
@@ -874,10 +913,19 @@
                     </div>
                     <p id="progress-text">Procesando: 0/${participantesGrupo.length}</p>
                     <p id="memory-status"></p>
+=======
+                    <h3>Generando archivo ZIP</h3>
+                    <p>Por favor espere, esto puede tomar varios minutos...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="zip-progress"></div>
+                    </div>
+                    <p id="progress-text">0/${participantes.length} certificados procesados</p>
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
                 </div>
             `;
             document.body.appendChild(overlay);
             
+<<<<<<< HEAD
             const progressBar = document.getElementById('zip-progress');
             const progressText = document.getElementById('progress-text');
             const memoryStatus = document.getElementById('memory-status');
@@ -959,10 +1007,90 @@
         } catch (error) {
             console.error('Error generando ZIP:', error);
             alert(`Error: ${error.message || 'Problema al generar el archivo'}`);
+=======
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            botonDescargar.disabled = true;
+            botonDescargar.textContent = 'Generando...';
+            
+            const archivoZip = new JSZip();
+            const folder = archivoZip.folder("Certificados");
+            const progressBar = document.getElementById('zip-progress');
+            const progressText = document.getElementById('progress-text');
+            
+            // Procesar en lotes de 3 para mejor rendimiento
+            const batchSize = 3;
+            let processed = 0;
+            
+            for (let i = 0; i < participantes.length; i += batchSize) {
+                const batch = participantes.slice(i, i + batchSize);
+                const batchPromises = batch.map(async (participante, batchIndex) => {
+                    const indice = i + batchIndex;
+                    const elemento = document.getElementById(`certificado-${indice}`);
+                    
+                    const lienzo = await html2canvas(elemento, { 
+                        useCORS: true, 
+                        scale: 1.5,
+                        backgroundColor: null,
+                        logging: false
+                    });
+                    
+                    return {
+                        nombre: `Certificado_${participante.nombre.replace(/ /g, '_')}.png`,
+                        datos: lienzo.toDataURL('image/png', 0.8)
+                    };
+                });
+                
+                const batchResults = await Promise.all(batchPromises);
+                
+                batchResults.forEach(certificado => {
+                    const datosBase64 = certificado.datos.split(',')[1];
+                    folder.file(certificado.nombre, datosBase64, { base64: true });
+                });
+                
+                processed = Math.min(i + batchSize, participantes.length);
+                const progressPercent = (processed / participantes.length) * 100;
+                
+                progressBar.style.width = `${progressPercent}%`;
+                progressText.textContent = `${processed}/${participantes.length} certificados procesados`;
+                
+                // Pequeña pausa entre lotes para evitar bloqueo del navegador
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Compresión mejorada
+            const contenido = await archivoZip.generateAsync({ 
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
+            });
+            
+            const enlace = document.createElement('a');
+            enlace.href = URL.createObjectURL(contenido);
+            enlace.download = "Certificados.zip";
+            enlace.click();
+            
+            // Limpiar
+            document.body.removeChild(overlay);
+            botonDescargar.disabled = false;
+            botonDescargar.textContent = 'Descargar Todos (ZIP)';
+            
+        } catch (error) {
+            console.error('Error al generar ZIP:', error);
+            alert("Error al generar el archivo ZIP. Por favor intente con menos certificados o recargue la página.");
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             
             // Limpiar en caso de error
             const overlay = document.querySelector('.loading-overlay');
             if (overlay) document.body.removeChild(overlay);
+<<<<<<< HEAD
+=======
+            
+            const botonDescargar = document.getElementById('botonDescargarTodos');
+            if (botonDescargar) {
+                botonDescargar.disabled = false;
+                botonDescargar.textContent = 'Descargar Todos (ZIP)';
+            }
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
         }
     }
 </script>

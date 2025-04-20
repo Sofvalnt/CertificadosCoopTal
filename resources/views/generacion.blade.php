@@ -480,6 +480,7 @@
             transition: width 0.3s;
         }
 
+<<<<<<< HEAD
         /* Estilos para grupos de descarga */
         .download-group {
             margin: 20px 0;
@@ -488,6 +489,8 @@
             border-radius: 10px;
         }
 
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
         @media (max-width: 768px) {
             .design-option {
                 width: 150px;
@@ -559,7 +562,10 @@
             <li>Haz clic en "Generar Diplomas"</li>
             <li>Descarga los diplomas individualmente o todos juntos en un ZIP</li>
         </ol>
+<<<<<<< HEAD
         <p class="destacado">Para más de 100 diplomas, se generarán múltiples archivos ZIP automáticamente.</p>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     </div>
 
     <!-- Selector de diseño -->
@@ -627,6 +633,7 @@
         </h3>
         
         <div id="contenedor-diplomas"></div>
+<<<<<<< HEAD
         
         <!-- Sección para grupos de descarga cuando hay muchos diplomas -->
         <div id="download-groups" style="display: none;">
@@ -634,6 +641,8 @@
                 Grupos de Descarga
             </h4>
         </div>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     </div>
 </div>
 
@@ -649,7 +658,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
 
 <script>
     // Variables globales
@@ -894,16 +906,20 @@ Nombre Apellido1 Apellido2;`;
         document.getElementById('generated-diplomas').style.display = 'block';
         document.getElementById('botonGenerar').disabled = true;
         
+<<<<<<< HEAD
         // Mostrar opción de grupos si hay muchos diplomas
         if (estudiantes.length > 100) {
             document.getElementById('download-groups').style.display = 'block';
             crearBotonesGruposDescarga();
         }
         
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
         // Scroll a la sección de diplomas generados
         document.getElementById('generated-diplomas').scrollIntoView({ behavior: 'smooth' });
     }
 
+<<<<<<< HEAD
     function crearBotonesGruposDescarga() {
         const gruposContainer = document.getElementById('download-groups');
         gruposContainer.innerHTML = '';
@@ -934,6 +950,8 @@ Nombre Apellido1 Apellido2;`;
         await generarYDescargarZIP(grupo, `Diplomas_${start + 1}-${Math.min(end, estudiantes.length)}`);
     }
 
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     async function descargarDiploma(indice) {
         try {
             const elemento = document.getElementById(`diploma-${estudiantes[indice].id}`);
@@ -941,12 +959,20 @@ Nombre Apellido1 Apellido2;`;
                 useCORS: true,
                 scale: 2,
                 logging: false,
+<<<<<<< HEAD
                 allowTaint: true,
                 removeContainer: true
             });
             
             const enlace = document.createElement('a');
             enlace.download = `Diploma_${estudiantes[indice].nombreCompleto.replace(/[^a-z0-9]/gi, '_')}.png`;
+=======
+                allowTaint: true
+            });
+            
+            const enlace = document.createElement('a');
+            enlace.download = `Diploma_${estudiantes[indice].nombreCompleto.replace(/ /g, '_')}.png`;
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             enlace.href = lienzo.toDataURL('image/png');
             enlace.click();
         } catch (error) {
@@ -956,6 +982,7 @@ Nombre Apellido1 Apellido2;`;
     }
     
     async function descargarTodos() {
+<<<<<<< HEAD
         if (estudiantes.length > 100) {
             if (confirm(`Para mejor rendimiento con ${estudiantes.length} diplomas, se generarán múltiples archivos ZIP. ¿Continuar?`)) {
                 crearBotonesGruposDescarga();
@@ -1072,6 +1099,92 @@ Nombre Apellido1 Apellido2;`;
             const overlay = document.querySelector('.loading-overlay');
             if (overlay) {
                 document.body.removeChild(overlay);
+=======
+        try {
+            // Mostrar mensaje de carga
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = `
+                <div class="loading-content">
+                    <h3>Generando archivo ZIP</h3>
+                    <p>Por favor espere, esto puede tomar varios minutos...</p>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <p id="progress-text">0/${estudiantes.length} diplomas procesados</p>
+                </div>
+            `;
+            document.body.appendChild(loadingOverlay);
+            
+            const archivoZip = new JSZip();
+            const folder = archivoZip.folder("Diplomas");
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            // Procesar en lotes para mejor rendimiento
+            const batchSize = 3;
+            let processed = 0;
+            
+            for (let i = 0; i < estudiantes.length; i += batchSize) {
+                const batch = estudiantes.slice(i, i + batchSize);
+                const batchPromises = batch.map(async (estudiante, batchIndex) => {
+                    const indice = i + batchIndex;
+                    const elemento = document.getElementById(`diploma-${estudiante.id}`);
+                    
+                    const lienzo = await html2canvas(elemento, { 
+                        useCORS: true,
+                        scale: 1.5,
+                        logging: false,
+                        allowTaint: true
+                    });
+                    
+                    return {
+                        nombre: `Diploma_${estudiante.nombreCompleto.replace(/ /g, '_')}.png`,
+                        datos: lienzo.toDataURL('image/png', 0.8)
+                    };
+                });
+                
+                const batchResults = await Promise.all(batchPromises);
+                
+                batchResults.forEach(diploma => {
+                    const datosBase64 = diploma.datos.split(',')[1];
+                    folder.file(diploma.nombre, datosBase64, { base64: true });
+                });
+                
+                processed = Math.min(i + batchSize, estudiantes.length);
+                const progressPercent = (processed / estudiantes.length) * 100;
+                
+                progressBar.style.width = `${progressPercent}%`;
+                progressText.textContent = `${processed}/${estudiantes.length} diplomas procesados`;
+                
+                // Pequeña pausa entre lotes para evitar bloqueo del navegador
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Compresión mejorada
+            const contenido = await archivoZip.generateAsync({ 
+                type: "blob",
+                compression: "DEFLATE",
+                compressionOptions: { level: 6 }
+            });
+            
+            const enlace = document.createElement('a');
+            enlace.href = URL.createObjectURL(contenido);
+            enlace.download = "Diplomas.zip";
+            enlace.click();
+            
+            // Eliminar overlay de carga
+            document.body.removeChild(loadingOverlay);
+            
+        } catch (error) {
+            console.error('Error al generar ZIP:', error);
+            alert("Error al generar el archivo ZIP. Por favor intente con menos diplomas o recargue la página.");
+            
+            // Eliminar overlay de carga en caso de error
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            if (loadingOverlay) {
+                document.body.removeChild(loadingOverlay);
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             }
         }
     }
@@ -1088,7 +1201,10 @@ Nombre Apellido1 Apellido2;`;
         if (confirm("¿Estás seguro de que deseas eliminar todos los diplomas generados?")) {
             document.getElementById('contenedor-diplomas').innerHTML = '';
             document.getElementById('botonDescargarTodos').style.display = 'none';
+<<<<<<< HEAD
             document.getElementById('download-groups').style.display = 'none';
+=======
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
             document.getElementById('botonGenerar').disabled = false;
             estudiantes = [];
             document.getElementById('nombre-archivo').textContent = 'No se ha seleccionado archivo';

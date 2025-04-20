@@ -53,6 +53,7 @@ return [
     | Here you can change the logo of your admin panel.
     */
 
+<<<<<<< HEAD
     'logo' => '
     <div style="text-align: center;">
         <img src="/vendor/adminlte/dist/img/AdminLTELogo.png" alt="Logo" style="height: 60px; margin-bottom: 5px;"><br>
@@ -67,6 +68,14 @@ return [
     'logo_img_xl' => null,
     'logo_img_xl_class' => ' ',
     'logo_img_alt' => ' ',
+=======
+    'logo' => '<h1>Cooperativa De Ahorro Y Crédito<b> "Talanga" LTDA </b><h1>',
+    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_xl' => null,
+    'logo_img_xl_class' => 'brand-image-xs',
+    'logo_img_alt' => 'Admin Logo',
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
 
     /*
     |--------------------------------------------------------------------------
@@ -76,6 +85,7 @@ return [
     |
     */
 
+<<<<<<< HEAD
     // 'auth_logo' => [
     //     'enabled' => true,
     //     'img' => [
@@ -89,6 +99,19 @@ return [
 
 
     
+=======
+    'auth_logo' => [
+        'enabled' => true,
+        'img' => [
+            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'alt' => 'Auth Logo',
+            'class' => '',
+            'width' => 140,
+            'height' => 140,
+        ],
+    ],
+
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     /*
     |--------------------------------------------------------------------------
     | Preloader Animation
@@ -97,6 +120,7 @@ return [
     |
     */
 
+<<<<<<< HEAD
     // 'preloader' => [
     //     'enabled' => true,
     //     'mode' => 'fullscreen',
@@ -136,6 +160,19 @@ return [
     'autohide' => false, // Controlado manualmente para certificados
     'progress' => true, // Barra de progreso para generación
 ],
+=======
+    'preloader' => [
+        'enabled' => true,
+        'mode' => 'fullscreen',
+        'img' => [
+            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'alt' => 'AdminLTE Preloader Image',
+            'width' => 200,
+            'height' => 200,
+        ],
+    ],
+
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     /*
     |--------------------------------------------------------------------------
     | User Menu
@@ -146,7 +183,11 @@ return [
     |
     */
 
+<<<<<<< HEAD
     'usermenu_enabled' => false,
+=======
+    'usermenu_enabled' => true,
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
@@ -257,6 +298,10 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => 'dashboard',
+<<<<<<< HEAD
+=======
+    'logout_url' => 'logout',
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
@@ -282,6 +327,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
+<<<<<<< HEAD
     'menu' => [
     // Navbar items:
     [
@@ -292,6 +338,18 @@ return [
             'onclick' => "toggleDarkMode(); return false;",
             'style' => 'padding: 0.5rem;'
         ],
+=======
+
+       
+
+
+    'menu' => [
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'search',
+        'topnav_right' => true,
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
     ],
     [
         'type' => 'fullscreen',
@@ -381,7 +439,24 @@ return [
         'target' => '_blank'
     ],
     
+<<<<<<< HEAD
    
+=======
+   // Separador antes del botón de cerrar sesión
+   [
+    'header' => 'CUENTA',
+    'classes' => 'mt-auto' // Esto empuja el contenido hacia abajo
+],
+
+// Botón de Cerrar Sesión en el sidebar
+[
+    'text' => 'Cerrar Sesión',
+    'url' => '#',
+    'icon' => 'fas fa-fw fa-sign-out-alt',
+    'class' => 'logout-sidebar-btn',
+    'onclick' => 'event.preventDefault(); confirmLogout();',
+],
+>>>>>>> 0ca187b08f2b21bfccecc6bd75900ab33dc4e5f7
 ],
     /*
     |--------------------------------------------------------------------------
