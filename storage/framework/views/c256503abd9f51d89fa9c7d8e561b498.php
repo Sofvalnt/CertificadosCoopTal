@@ -1,6 +1,12 @@
-<?php $__env->startSection('adminlte_css_pre'); ?>
-    <link rel="stylesheet" href="<?php echo e(asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css')); ?>">
-<?php $__env->stopSection(); ?>
+<?php $__env->startPush('css'); ?>
+    <style>
+        body.login-page {
+            background: url('<?php echo e(asset('vendor/adminlte/dist/img/fondo.png')); ?>') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+<?php $__env->stopPush(); ?>
+
 
 <?php
     $loginUrl = View::getSection('login_url') ?? config('adminlte.login_url', 'login');
@@ -126,7 +132,8 @@ unset($__errorArgs, $__bag); ?>
     
     <?php if($registerUrl): ?>
         <p class="my-0">
-            <a class= "text-success" href="<?php echo e($registerUrl); ?>">
+        <a class="text-success" href="<?php echo e(route('verificar-registro')); ?>">
+
                 <?php echo e(__('adminlte::adminlte.register_a_new_membership')); ?>
 
             </a>

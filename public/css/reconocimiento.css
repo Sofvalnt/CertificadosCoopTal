@@ -1,0 +1,342 @@
+:root {
+    --bg-color: #ffffff;
+    --button-bg: #285430;
+    --button-hover: #112214;
+    --panel-bg: #bdf1c6;;
+    --secondary-color: #285430;
+    --tutor-color: #0d0e0d;
+    --certificado-bg: url('../vendor/adminlte/dist/img/reconocimiento.png');
+    --border-color: #ddd;
+    --highlight-color: #e74c3c;
+    --progress-bg: #285430;
+}
+
+.dark-mode {
+    --bg-color: #1a1a1a;
+    --button-bg: #4a8c2a;
+    --button-hover: #2c5e1a;
+    --panel-bg: rgb(20, 29, 22);
+    --secondary-color: #f8c537;
+    --tutor-color: #f8f9fa;
+    --certificado-bg: url('../vendor/adminlte/dist/img/reconocimiento.png');
+    --border-color: #444;
+    --highlight-color: #f8c537;
+    --progress-bg: #f8c537;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: #000000;;
+    padding-bottom: 100px;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+.instrucciones {
+    background-color: var(--panel-bg);
+    border-left: 4px solid var(--button-bg);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+.destacado {
+    font-weight: bold;
+    color: var(--highlight-color);
+}
+
+.contenedor-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.marco-imagen {
+    border: 8px solid var(--border-color);
+    border-radius: 10px;
+    padding: 5px;
+    background-color: var(--panel-bg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.marco-imagen:hover {
+    border-color: var(--button-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+}
+
+.imagen-interactiva {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.marco-imagen:hover .imagen-interactiva {
+    transform: scale(1.02);
+}
+
+.pie-imagen {
+    text-align: center;
+    margin-top: 5px;
+    font-style: italic;
+    color: #000000;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+#botonDescargarTodos {
+    display: none;
+}
+
+.certificado {
+    background-image: var(--certificado-bg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.nombre-certificado {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    text-align: center;
+    font-family: 'Vivaldi', sans-serif;
+    color: #000000;
+}
+
+.texto-certificado {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    font-size: 20px;
+    text-align: justify;
+    color: #000000;;
+}
+
+.fecha-certificado {
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+
+.qr-container {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    filter: contrast(1.1);
+}
+
+.botones {
+    margin: 20px;
+    padding: 10px;
+    background: var(--panel-bg);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: all 0.5s;
+}
+
+.grupo-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    background: var(--bg-color);
+    color: #000000;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--button-bg);
+}
+
+button {
+    padding: 10px 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+#contenedor {
+    margin-top: 20px;
+}
+
+.certificado-item {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.btn-descargar {
+    padding: 10px 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px 0;
+    transition: all 0.3s;
+}
+
+.btn-descargar:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+/* Estilos para el modal de carga */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background: var(--panel-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    color: var(--text-color);
+    max-width: 80%;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 20px;
+    background-color: var(--progress-bg);
+    border-radius: 5px;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* Botón de modo oscuro */
+#botonModoOscuro {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#iconoTema {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.5s, filter 0.3s;
+}
+
+#iconoTema:hover {
+    filter: brightness(1.2);
+}
+
+@media (max-width: 768px) {
+    .marco-imagen {
+        max-width: 300px;
+        padding: 3px;
+    }
+    
+    .pie-imagen {
+        font-size: 0.8em;
+    }
+    
+    .botones {
+        padding: 10px;
+    }
+    
+    .grupo-botones {
+        flex-direction: column;
+    }
+    
+    .certificado {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 297/210;
+    }
+    
+    .nombre-certificado {
+        font-size: 24px;
+        top: 35%;
+    }
+    
+    .texto-certificado {
+        font-size: 14px;
+        top: 50%;
+        width: 80%;
+    }
+    
+    .fecha-certificado {
+        top: 85%;
+    }
+
+    .qr-container {
+        width: 60px;
+        height: 60px;
+        top: 85%;
+        left: 5%;
+    }
+
+    #botonModoOscuro {
+        top: 10px;
+        right: 10px;
+    }
+
+    #iconoTema {
+        width: 30px;
+        height: 30px;
+    }
+}

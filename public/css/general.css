@@ -1,0 +1,539 @@
+:root {
+    --primary: #2c5e1a;
+    --secondary: #f8c537;
+    --light: #f5f7fa;
+    --dark: #1e293b;
+    --hover-yellow: #f9ff32;
+    --danger: #e74c3c;
+    --info: #3498db;
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --panel-bg: #bdf1c6;
+    --nombre-color: #2c3e50;
+    --tutor-color: #0d0e0d;
+    --border-color: #ddd;
+    --highlight-color: #e74c3c;
+    --progress-bg: #285430;
+}
+
+.dark-mode {
+    --primary: #4a8c2a;
+    --secondary: #f8c537;
+    --bg-color: #1a1a1a;
+    --text-color: #000000;
+    --panel-bg: #2d3748;
+    --nombre-color: #000000;
+    --border-color: #444;
+    --highlight-color: #f8c537;
+    --progress-bg: #f8c537;
+    --light: #2d3748;
+    --dark: #f5f7fa;
+    
+    --button-bg: #285430;
+    --button-hover: #112214;
+    --panel-bg:rgb(44, 65, 49);
+    --secondary-color: #285430;
+    --tutor-color: #0d0e0d;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.5s, color 0.5s;
+    padding-bottom: 150px;
+}
+
+.generator-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+}
+
+.fixed-buttons {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel-bg);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+    transition: all 0.5s;
+}
+
+.instructions {
+    background-color: var(--panel-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border-left: 5px solid var(--primary);
+    transition: all 0.5s;
+}
+
+.instructions h3 {
+    color: var(--primary);
+    margin-top: 0;
+}
+
+.instructions ol {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+}
+
+.design-selector {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 20px;
+    background: var(--bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 100;
+    transition: all 0.5s;
+}
+
+.design-option {
+    width: 180px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.design-option:hover {
+    transform: translateY(-5px);
+}
+
+.design-preview {
+    width: 100%;
+    height: 120px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid transparent;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.design-option:hover .design-preview {
+    border-color: var(--secondary);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.design-option.active .design-preview {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--secondary);
+}
+
+.design-name {
+    margin-top: 10px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.controls-section {
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    transition: all 0.5s;
+}
+
+.control-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+    background-color: var(--dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--hover-yellow);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+.btn-info {
+    background-color: var(--info);
+}
+
+.btn-info:hover {
+    background-color: #2980b9;
+}
+
+.diploma-preview-container {
+    position: relative;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.diploma-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.diploma-preview:hover {
+    transform: scale(1.01);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.generated-diplomas {
+    margin-top: 40px;
+}
+
+.diploma-item {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Estilos para los diplomas */
+.diploma-1 {
+    background-image: url('../vendor/adminlte/dist/img/diploma.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.diploma-2 {
+    background-image: url('../vendor/adminlte/dist/img/general2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.diploma-3 {
+    background-image: url('../vendor/adminlte/dist/img/juventud.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.diploma-4 {
+    background-image: url('../vendor/adminlte/dist/img/genero.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.diploma-5 {
+    background-image: url('../vendor/adminlte/dist/img/educacion.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+/* Posicionamiento del texto en los diplomas */
+.nombre {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    text-align: center;
+    font-family: 'Vivaldi', serif;
+    color: var(--nombre-color);
+}
+
+.curso {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: var(--nombre-color);
+}
+
+.modalidad {
+    position: absolute;
+    top: 56%;
+    left: 43%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: var(--nombre-color);
+}
+
+.duracion {
+    position: absolute;
+    top: 56%;
+    left: 73%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: var(--nombre-color);
+}
+
+.fecha-finalizacion {
+    position: absolute;
+    top: 62%;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: var(--nombre-color);
+}
+
+.fecha-emision {
+    position: absolute;
+    top: 66%;
+    left: 50%;
+    font-size: 20px;
+    color: var(--nombre-color);
+}
+
+.tutor {
+    position: absolute;
+    top: 81%;
+    left: 65%;
+    font-size: 20px;
+    color: var(--tutor-color);
+}
+
+
+.qr-code {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    filter: contrast(1.1);
+}
+
+/* Botón de modo oscuro */
+#botonModoOscuro {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#iconoTema {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.5s, filter 0.3s;
+}
+
+#botonModoOscuro:hover #iconoTema {
+    filter: brightness(1.2);
+    transform: scale(1.1);
+}
+
+/* Estilos para el input de archivo */
+.file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: var(--info);
+    color: white;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.file-input-label:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+#archivoCSV {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+#nombre-archivo {
+    margin-left: 10px;
+    color: var(--text-color);
+}
+
+/* Estilos para el modal de carga */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background: var(--panel-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    color: var(--text-color);
+    max-width: 80%;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: var(--progress-bg);
+    border-radius: 5px;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+@media (max-width: 768px) {
+    .design-option {
+        width: 150px;
+    }
+    
+    .control-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .fixed-buttons {
+        width: 90%;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .diploma-1, .diploma-2, .diploma-3, .diploma-4, .diploma-5 {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 297/210;
+    }
+    
+    .nombre {
+        font-size: 24px;
+        top: 40%;
+    }
+    
+    .curso {
+        font-size: 18px;
+        top: 25%;
+    }
+    
+    .modalidad, .duracion, .fecha-finalizacion, .fecha-emision, .tutor {
+        font-size: 14px;
+    }
+    
+    .qr-code {
+        width: 60px;
+        height: 60px;
+        bottom: 10px;
+        left: 10px;
+    }
+    
+    #botonModoOscuro {
+        top: 10px;
+        right: 10px;
+    }
+
+    #iconoTema {
+        width: 30px;
+        height: 30px;
+    }
+   
+}

@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 return [
 
@@ -53,12 +53,18 @@ return [
     | Here you can change the logo of your admin panel.
     */
 
-    'logo' => '<h1>Cooperativa De Ahorro Y Crédito<b> "Talanga" LTDA </b><h1>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '
+    <div style="text-align: center;">
+         <div style="font-size: 1.3rem; font-weight: bold; line-height: 1.3;">
+            Cooperativa de Ahorro<br> y Crédito<br>"Talanga" LTDA
+        </div>
+    </div>',
+
+    'logo_img' => '',
+    'logo_img_class' => '',
     'logo_img_xl' => null,
-    'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Admin Logo',
+    'logo_img_xl_class' => '',
+    'logo_img_alt' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -89,13 +95,31 @@ return [
 
     'preloader' => [
         'enabled' => true,
-        'mode' => 'fullscreen',
-        'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
-            'width' => 200,
-            'height' => 200,
+        'theme' => 'certificate', 
+        'animation' => [
+            'type' => 'confetti', 
+            'colors' => ['#4CAF50', '#2196F3', '#FFC107', '#FF5722'],
         ],
+        'img' => [
+            'enabled' => true,
+            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png', 
+            'width' => 120,
+            'height' => 120,
+            'animation' => 'none', 
+        ],
+        'text' => [
+            'enabled' => true,
+            'content' => 'Generando tu certificado...',
+            'color' => '#2E7D32', 
+            'animation' => 'typewriter', 
+        ],
+        'background' => 'rgba(255, 255, 255, 0.95)', 
+        'elements' => [ 
+            'stars' => true,
+            'border_animation' => true,
+        ],
+        'autohide' => false, 
+        'progress' => true, 
     ],
 
     /*
@@ -108,7 +132,7 @@ return [
     |
     */
 
-    'usermenu_enabled' => true,
+    'usermenu_enabled' => false,
     'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
@@ -127,7 +151,7 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
+    'layout_fixed_sidebar' => true, // Fija el sidebar
     'layout_fixed_navbar' => null,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
@@ -219,7 +243,6 @@ return [
 
     'use_route_url' => false,
     'dashboard_url' => 'dashboard',
-    'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
@@ -245,120 +268,99 @@ return [
     |--------------------------------------------------------------------------
     */
 
-
-       
-
-
     'menu' => [
-    // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'search',
-        'topnav_right' => true,
-    ],
-    [
-        'type' => 'fullscreen',
-        'topnav_right' => true,
+        // Navbar items:
+        
+        [
+            'type' => 'fullscreen',
+            'topnav_right' => true,
+        ],
+
+        // Sidebar items:
+        [
+            'type' => 'sidebar-menu-search',
+            'text' => 'search',
+        ],
+        [
+            'text' => 'Principal',
+            'url' => 'dashboard',
+            'icon' => 'fa fa-globe',
+        ],
+        [
+            'text' => 'Generador de diplomas',
+            'url' => 'generacion',
+            'icon' => 'fa fa-graduation-cap',
+        ],
+        [
+            'text' => 'Generador de Certificados',
+            'url' => 'generacionCertificados',
+            'icon' => 'fa fa-graduation-cap',
+        ],
+        [
+            'header' => 'DIPLOMAS'
+        ],
+        
+        [
+            'text' => 'Individual',
+            'icon' => 'far fa-fw fa-folder',
+            'submenu' => [
+                [   
+                    'text' => 'Para instructores',
+                    'url' => 'reconocimiento',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [   
+                    'text' => 'Para participantes',
+                    'url' => 'participacion',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [   
+                    'text' => 'Diploma General 1',
+                    'url' => 'generador',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [
+                    'text' => 'Diploma General 2',
+                    'url' => 'general',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [
+                    'text' => 'Comite de Juventud',
+                    'url' => 'juventud',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [
+                    'text' => 'Comite de Genero',
+                    'url' => 'genero',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+                [
+                    'text' => 'Comite de Educación',
+                    'url' => 'educacion',
+                    'icon' => 'fas fa-fw fa-certificate',
+                ],
+            ]
+        ],
+
+        [
+            'header' => 'GENERAL'
+        ],
+
+        [
+            'text' => 'Perfil',
+            'url' => 'perfil',
+            'icon' => 'fas fa-fw fa-user',
+        ],
+        
+        [
+            'text' => 'Ir a Classroom',
+            'url' => 'https://classroom.google.com/?pli=1',
+            'icon' => 'fas fa-fw fa-laptop',
+            'target' => '_blank'
+        ],
+        
     ],
 
-    // Sidebar items:
-    [
-        'type' => 'sidebar-menu-search',
-        'text' => 'search',
-    ],
-    [
-        'text' => 'Principal',
-        'url' => 'dashboard',
-        'icon' => 'fa fa-globe',
-    ],
-    [
-        'text' => 'Generador de diplomas',
-        'url' => 'generacion',
-        'icon' => 'fa fa-graduation-cap',
-    ],
-    [
-        'text' => 'Generador de Certificados',
-        'url' => 'generacionCertificados',
-        'icon' => 'fa fa-graduation-cap',
-    ],
-    [
-        'header' => 'DIPLOMAS'
-    ],
-    
-    [
-        'text' => 'Individual',
-        'icon' => 'far fa-fw fa-folder',
-        'submenu' => [
-            [   
-                'text' => 'Para instructores',
-                'url' => 'reconocimiento',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [   
-                'text' => 'Para participantes',
-                'url' => 'participacion',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [   
-                'text' => 'Diploma General 1',
-                'url' => 'generador',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [
-                'text' => 'Diploma General 2',
-                'url' => 'general',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [
-                'text' => 'Comite de Juventud',
-                'url' => 'juventud',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [
-                'text' => 'Comite de Genero',
-                'url' => 'genero',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-            [
-                'text' => 'Comite de Educación',
-                'url' => 'educacion',
-                'icon' => 'fas fa-fw fa-certificate',
-            ],
-        ]
-    ],
-
-    [
-        'header' => 'GENERAL'
-    ],
-
-    [
-        'text' => 'Perfil',
-        'url' => 'perfil',
-        'icon' => 'fas fa-fw fa-user',
-    ],
-    
-    [
-        'text' => 'Ir a Classroom',
-        'url' => 'https://classroom.google.com/?pli=1',
-        'icon' => 'fas fa-fw fa-laptop',
-        'target' => '_blank'
-    ],
-    
-   // Separador antes del botón de cerrar sesión
-   [
-    'header' => 'CUENTA',
-    'classes' => 'mt-auto' // Esto empuja el contenido hacia abajo
-],
-
-// Botón de Cerrar Sesión en el sidebar
-[
-    'text' => 'Cerrar Sesión',
-    'url' => '#',
-    'icon' => 'fas fa-fw fa-sign-out-alt',
-    'class' => 'logout-sidebar-btn',
-    'onclick' => 'event.preventDefault(); confirmLogout();',
-],
-],
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
@@ -403,93 +405,5 @@ return [
                 ],
             ],
         ],
-        'Select2' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
-                ],
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
-                ],
-            ],
-        ],
-        'Chartjs' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js',
-                ],
-            ],
-        ],
-        'Sweetalert2' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
-                ],
-            ],
-        ],
-        'Pace' => [
-            'active' => false,
-            'files' => [
-                [
-                    'type' => 'css',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
-                ],
-                [
-                    'type' => 'js',
-                    'asset' => false,
-                    'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
-                ],
-            ],
-        ],
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | IFrame
-    |--------------------------------------------------------------------------
-    |
-    |
-    */
-
-    'iframe' => [
-        'default_tab' => [
-            'url' => null,
-            'title' => null,
-        ],
-        'buttons' => [
-            'close' => true,
-            'close_all' => true,
-            'close_all_other' => true,
-            'scroll_left' => true,
-            'scroll_right' => true,
-            'fullscreen' => true,
-        ],
-        'options' => [
-            'loading_screen' => 15,
-            'auto_show_new_tab' => true,
-            'use_navbar_items' => true,
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Livewire
-    |--------------------------------------------------------------------------
-    |
-    |
-    */
-
-    'livewire' => false,
 ];

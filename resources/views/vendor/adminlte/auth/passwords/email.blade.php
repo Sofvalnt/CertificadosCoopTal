@@ -19,20 +19,35 @@
             {{ session('status') }}
         </div>
     @endif
+    
     <form action="https://formspree.io/f/mrbpalol" method="post" id="contact_form">
         @csrf
 
-        {{-- Email field --}}
-        <div class="input-group mb-3">
-            <input type="email" name="Correo electronico que requiere cambio de contraseña" class="form-control @error('email') is-invalid @enderror"
-                value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}"  required autofocus>
+        {{-- Instrucciones --}}
+        <div class="alert alert-info mb-4">
+            <strong>Instrucciones:</strong>
+            Se enviará un correo con una contraseña temporal. Cuando inicies sesión con ella, podrás cambiarla por una nueva.
+        </div>
 
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+        {{-- Campo de correo obligatorio --}}
+        <div class="form-group mb-4">
+            <label for="email" class="form-label text-muted">{{ __('Correo electrónico') }}</label>
+            <div class="input-group">
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="Correo electronico que requiere cambio de contraseña" 
+                    class="form-control @error('email') is-invalid @enderror"
+                    value="{{ old('email') }}" 
+                    placeholder="{{ __('adminlte::adminlte.email') }}"  
+                    required 
+                    autofocus>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                    </div>
                 </div>
             </div>
-
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -40,9 +55,20 @@
             @enderror
         </div>
 
-        {{-- Send reset link button --}}
-        <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-            <span class="fas fa-share-square">Enviar Correo para restablecimiento de Contraseña</span>
+        {{-- Campo de observaciones/comentarios (opcional) --}}
+        <div class="form-group mb-4">
+            <label for="observations" class="form-label text-muted">{{ __('Observaciones o comentarios (opcional)') }}</label>
+            <textarea 
+                id="observations" 
+                name="observaciones" 
+                class="form-control" 
+                rows="4" 
+                placeholder="Escribe tus comentarios aquí..."></textarea>
+        </div>
+
+        {{-- Botón de enviar correo --}}
+        <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }} mb-3">
+            <span class="fas fa-share-square"></span> Enviar Correo para Restablecimiento de Contraseña
         </button>
     </form>
 

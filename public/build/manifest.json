@@ -1,13 +1,24 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BTO63vwc.css",
+    "file": "assets/app-BX2P8AEV.css",
     "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/diploma.css": {
+    "file": "assets/diploma-BNe4a4Eq.css",
+    "src": "resources/css/diploma.css",
     "isEntry": true
   },
   "resources/js/app.js": {
     "file": "assets/app-CqflisoM.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/diploma.js": {
+    "file": "assets/diploma-CUwGwJ01.js",
+    "name": "diploma",
+    "src": "resources/js/diploma.js",
     "isEntry": true
   }
 }

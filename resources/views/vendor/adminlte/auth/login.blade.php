@@ -1,8 +1,13 @@
 @extends('adminlte::auth.auth-page', ['authType' => 'login'])
+@push('css')
+    <style>
+        body.login-page {
+            background: url('{{ asset('vendor/adminlte/dist/img/fondo.png') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+@endpush
 
-@section('adminlte_css_pre')
-    <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-@stop
 
 @php
     $loginUrl = View::getSection('login_url') ?? config('adminlte.login_url', 'login');
@@ -97,7 +102,8 @@
     {{-- Register link --}}
     @if($registerUrl)
         <p class="my-0">
-            <a class= "text-success" href="{{ $registerUrl }}">
+        <a class="text-success" href="{{ route('verificar-registro') }}">
+
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>

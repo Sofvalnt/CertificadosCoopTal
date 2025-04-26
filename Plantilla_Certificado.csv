@@ -1,12 +1,12 @@
-ï»¿Cooperativa de Ahorro y CrÃ©dito Talanga LTDA
+Cooperativa de Ahorro y CrÃ©dito Talanga LTDA
 
 INSTRUCCIONES:
-1. Complete los datos del curso y tutor abajo
-2. Escriba el texto a escribir en el diploma a la par de la opcion
-3. Escriba el nombre del participante a certificar en lista hacia abajo
- 4. No use tildes ni modifique la estructura
-5. Guarde el archivo como CSV (delimitado por punto y coma)
+1. Escribir en la casilla el nombre de tutor deberá rellenar B10
+2. Escriba el texto a escribir en el certificado en la casilla B11
+3. Escriba el nombre del participante a certificar en lista hacia abajo,( por ejemplo, A13, A14, A15, A16,etc…)
+4. No use tildes, ni modifique la estructura ya que  cada una esta en su lugar y orden especifico.
+5. Cuando el archivo este completo guarde el archivo como CSV (delimitado por punto y coma), el archivo actual ya tiene es un CSV, solamente guardar.
 
-
-Texto a escribir en diploma:
-Nombre del participante
+Tutor:
+Texto a escribir en diploma: 
+Nombres de los participantes

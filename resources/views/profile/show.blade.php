@@ -4,77 +4,104 @@
 
 @section('content_header')
     <div class="profile-header">
-        <h1 class="text-center"><i class="fas fa-user-circle mr-2"></i>Perfil del Usuario</h1>
-        <p class="text-center text-muted">Administra toda tu información personal y configuración de seguridad</p>
+        <div class="header-content">
+            <div class="avatar-container">
+                <div class="avatar-circle">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+            <h1>Perfil del Usuario</h1>
+            <p class="header-subtitle">Administra tu información personal y configuración de seguridad</p>
+        </div>
     </div>
 @stop
 
 @section('content')
 <x-app-layout>
     <div class="profile-container">
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
-            <!-- Botón de modo oscuro -->
-            <button id="botonModoOscuro" onclick="alternarModoOscuro()" class="fixed top-5 right-5 z-50">
-                <img src="{{ asset('vendor/adminlte/dist/img/day.png') }}" alt="Modo Claro" id="iconoTema" class="w-10 h-10 transition-transform duration-300">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <!-- Botón de modo oscuro flotante -->
+            <button id="botonModoOscuro" onclick="alternarModoOscuro()" class="theme-toggle-btn">
+                <span class="theme-icon" id="iconoTema"></span>
             </button>
 
-            <!-- Sidebar horizontal funcional -->
-            <div class="horizontal-sidebar bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-6 overflow-x-auto">
-                <div class="flex flex-nowrap md:flex-wrap gap-2">
-                    <button class="sidebar-btn active" data-section="personal-info">
-                        <i class="fas fa-user mr-2"></i>Información Personal
+            <!-- Tarjeta principal con pestañas -->
+            <div class="profile-main-card">
+                <!-- Barra de pestañas -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-section="personal-info">
+                        <i class="fas fa-user"></i>
+                        <span>Información</span>
                     </button>
-                    <button class="sidebar-btn" data-section="security">
-                        <i class="fas fa-shield-alt mr-2"></i>Seguridad
+                    <button class="profile-tab" data-section="security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Seguridad</span>
                     </button>
-                    <button class="sidebar-btn" data-section="sessions">
-                        <i class="fas fa-laptop mr-2"></i>Sesiones
+                    <button class="profile-tab" data-section="sessions">
+                        <i class="fas fa-laptop"></i>
+                        <span>Sesiones</span>
                     </button>
-                    <button type="button" class="sidebar-btn logout-btn ml-auto" onclick="confirmLogout()">
-                        <i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión
-                    </button>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
-            </div>
-
-            <!-- Contenido principal -->
-            <div class="profile-card bg-white dark:bg-gray-800">
-                <!-- Sección de Información Personal -->
-                <div class="profile-section active-section" id="personal-info">
-                    @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-                    <div class="section-content">
-                        <h2 class="text-gray-800 dark:text-gray-200"><i class="fas fa-user-edit mr-2"></i>Información Personal</h2>
-                        @livewire('profile.update-profile-information-form')
-                    </div>
-                    @endif
+                    <div class="tab-underline"></div>
                 </div>
 
-                <!-- Sección de Seguridad -->
-                <div class="profile-section" id="security">
-                    @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-                    <div class="security-item bg-gray-50 dark:bg-gray-700">
-                        <h3 class="text-gray-800 dark:text-gray-200"><i class="fas fa-key mr-2"></i>Cambiar Contraseña</h3>
-                        @livewire('profile.update-password-form')
-                    </div>
-                    @endif
-                </div>
-
-                <!-- Sección de Sesiones -->
-                <div class="profile-section" id="sessions">
-                    <div class="security-item bg-gray-50 dark:bg-gray-700">
-                        <h3 class="text-gray-800 dark:text-gray-200"><i class="fas fa-laptop mr-2"></i>Sesiones Activas</h3>
-                        @livewire('profile.logout-other-browser-sessions-form')
+                <!-- Contenido de las pestañas -->
+                <div class="profile-content">
+                    <!-- Sección de Información Personal -->
+                    <div class="profile-section active-section" id="personal-info">
+                        @if (Laravel\Fortify\Features::canUpdateProfileInformation())
+                        <div class="section-card">
+                            <div class="section-header">
+                                <i class="fas fa-user-edit"></i>
+                                <h2>Información Personal</h2>
+                            </div>
+                            @livewire('profile.update-profile-information-form')
+                        </div>
+                        @endif
                     </div>
 
-                    @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-                    <div class="danger-section bg-red-50 dark:bg-red-900 dark:bg-opacity-20">
-                        <h3 class="text-gray-800 dark:text-gray-200"><i class="fas fa-exclamation-triangle mr-2"></i>Eliminar Cuenta</h3>
-                        @livewire('profile.delete-user-form')
+                    <!-- Sección de Seguridad -->
+                    <div class="profile-section" id="security">
+                        @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
+                        <div class="section-card security-card">
+                            <div class="section-header">
+                                <i class="fas fa-key"></i>
+                                <h2>Cambiar Contraseña</h2>
+                            </div>
+                            @livewire('profile.update-password-form')
+                        </div>
+                        @endif
                     </div>
-                    @endif
+
+                    <!-- Sección de Sesiones -->
+                    <div class="profile-section" id="sessions">
+                        <div class="section-card security-card">
+                            <div class="section-header">
+                                <i class="fas fa-laptop"></i>
+                                <h2>Sesiones Activas</h2>
+                            </div>
+                            @livewire('profile.logout-other-browser-sessions-form')
+                        </div>
+
+                        @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
+                        <div class="section-card danger-card">
+                            <div class="section-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h2>Eliminar Cuenta</h2>
+                            </div>
+                            @livewire('profile.delete-user-form')
+                        </div>
+                        @endif
+                    </div>
                 </div>
+
+                <!-- Botón de cerrar sesión flotante -->
+                <button class="logout-btn" onclick="confirmLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </div>
     </div>
@@ -84,187 +111,388 @@
 @section('css')
 <style>
     :root {
-        --primary: #2c5e1a;
-        --secondary: #f8c537;
-        --light: #f5f7fa;
-        --dark: #1e293b;
-        --hover-yellow: #f9ff32;
+        /* Paleta de colores principal */
+        --primary: #2c5e1a;       /* Verde principal */
+        --primary-100: #e8f3e4;  /* Verde muy claro */
+        --primary-200: #c2e0b9;
+        --primary-300: #9bcc8e;
+        --primary-400: #75b963;
+        --primary-500: #4a8c2a;   /* Verde medio */
+        --primary-600: #3a7a22;
+        --primary-700: #2c5e1a;   /* Verde principal */
+        --primary-800: #1e4612;
+        --primary-900: #0f2e09;   /* Verde muy oscuro */
+        
+        --secondary: #f8c537;     /* Amarillo principal */
+        --secondary-100: #fef8e6;
+        --secondary-200: #fcecbd;
+        --secondary-300: #fadf94;
+        --secondary-400: #f9d36b;
+        --secondary-500: #f8c537; /* Amarillo principal */
+        --secondary-600: #e6b22e;
+        --secondary-700: #d4a026;
+        --secondary-800: #c28e1e;
+        --secondary-900: #b07c16;
+        
+        /* Escala de grises */
+        --gray-50: #f9fafb;
+        --gray-100: #f3f4f6;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-400: #9ca3af;
+        --gray-500: #6b7280;
+        --gray-600: #4b5563;
+        --gray-700: #374151;
+        --gray-800: #1f2937;
+        --gray-900: #111827;
+        
+        /* Colores funcionales */
+        --success: #38a169;
+        --warning: #dd6b20;
+        --danger: #e53e3e;
+        --info: #3182ce;
+        
+        /* Variables de tema claro */
         --bg-color: #ffffff;
-        --text-color: #333333;
-        --panel-bg: #f8f9fa;
+        --text-color: var(--gray-800);
         --card-bg: #ffffff;
-        --header-bg: linear-gradient(135deg, #2c5e1a 0%, #4a8c2a 100%);
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --header-bg: linear-gradient(135deg, var(--primary-700) 0%, var(--primary-500) 100%);
         --header-text: white;
-        --sidebar-bg: #ffffff;
-        --sidebar-text: #334155;
-        --sidebar-active: #2c5e1a;
-        --sidebar-hover: #e2e8f0;
-        --danger-bg: #fff5f5;
-        --danger-border: #e53e3e;
-        --logout-bg: #fee2e2;
-        --logout-text: #b91c1c;
-        --logout-hover: #fecaca;
+        --border-color: var(--gray-200);
+        --hover-bg: var(--primary-100);
     }
 
     .dark-mode {
-        --primary: #2c5e1a;
-        --secondary: #f8c537;
-        --light: #2d3748;
-        --dark: #f5f7fa;
-        --hover-yellow: #f9ff32;
-        --bg-color: #1a1a1a;
+        /* Variables de tema oscuro */
+        --bg-color: #121212;
         --text-color: #e0e0e0;
-        --panel-bg: #2d2d2d;
-        --card-bg: #2d3748;
-        --header-bg: linear-gradient(135deg, #2c5e1a 0%, #2c5e1a 100%);
+        --card-bg: #1e1e1e;
+        --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        --header-bg: linear-gradient(135deg, var(--primary-900) 0%, var(--primary-700) 100%);
         --header-text: white;
-        --sidebar-bg: #2d3748;
-        --sidebar-text: #e2e8f0;
-        --sidebar-active: #f8c537;
-        --sidebar-hover: #4a5568;
-        --danger-bg: #4a1c1c;
-        --danger-border: #e53e3e;
-        --logout-bg: #4a1c1c;
-        --logout-text: #fecaca;
-        --logout-hover: #991b1b;
+        --border-color: #333333;
+        --hover-bg: var(--primary-900);
     }
 
-    /* Estilos generales */
+    /* Estilos base */
     body {
         background-color: var(--bg-color);
         color: var(--text-color);
-        transition: background-color 0.5s, color 0.5s;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        transition: all 0.3s ease;
     }
 
-    .profile-container {
-        background-color: var(--bg-color);
-        min-height: calc(100vh - 60px);
-    }
-    
+    /* Encabezado del perfil */
     .profile-header {
-        padding: 20px 0;
         background: var(--header-bg);
         color: var(--header-text);
-        margin-bottom: 30px;
-        border-radius: 0 0 10px 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem 0 4rem;
+        margin-bottom: -2rem;
+        position: relative;
+        overflow: hidden;
     }
-    
-    /* Sidebar horizontal */
-    .horizontal-sidebar {
-        transition: all 0.3s ease;
-        background-color: var(--sidebar-bg);
+
+    .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        padding: 0 1rem;
     }
-    
-    .horizontal-sidebar::-webkit-scrollbar {
-        height: 5px;
+
+    .avatar-container {
+        margin-bottom: 1rem;
     }
-    
-    .horizontal-sidebar::-webkit-scrollbar-thumb {
-        background: var(--primary);
-        border-radius: 10px;
-    }
-    
-    /* Botones del sidebar */
-    .sidebar-btn {
-        padding: 10px 16px;
-        border-radius: 8px;
-        background-color: var(--sidebar-bg);
-        color: var(--sidebar-text);
-        border: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
+
+    .avatar-circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
         display: inline-flex;
         align-items: center;
-        font-weight: 500;
-        white-space: nowrap;
-        margin-right: 8px;
-        flex-shrink: 0;
-    }
-    
-    .sidebar-btn:hover {
-        background: var(--sidebar-hover);
-        color: var(--sidebar-text);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
-    .sidebar-btn.active {
-        background: var(--sidebar-active);
+        justify-content: center;
+        font-size: 3rem;
         color: white;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: 3px solid white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-    
-    .sidebar-btn.logout-btn {
-        background-color: var(--logout-bg);
-        color: var(--logout-text);
+
+    .profile-header h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    
-    .sidebar-btn.logout-btn:hover {
-        background-color: var(--logout-hover);
-        color: var(--logout-text);
+
+    .header-subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto;
     }
-    
-    /* Tarjeta de perfil */
-    .profile-card {
+
+    /* Tarjeta principal */
+    .profile-main-card {
         background: var(--card-bg);
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        padding: 30px;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
     }
-    
-    /* Secciones del perfil */
+
+    /* Pestañas */
+    .profile-tabs {
+        display: flex;
+        position: relative;
+        border-bottom: 1px solid var(--border-color);
+        padding: 0 1.5rem;
+    }
+
+    .profile-tab {
+        padding: 1.2rem 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-color);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+    }
+
+    .profile-tab i {
+        font-size: 1.1rem;
+    }
+
+    .profile-tab.active {
+        opacity: 1;
+        color: var(--primary-700);
+    }
+
+    .dark-mode .profile-tab.active {
+        color: var(--secondary-500);
+    }
+
+    .profile-tab:hover {
+        opacity: 1;
+        color: var(--primary-700);
+    }
+
+    .dark-mode .profile-tab:hover {
+        color: var(--secondary-500);
+    }
+
+    .tab-underline {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        height: 2px;
+        background: var(--primary-500);
+        transition: all 0.3s ease;
+    }
+
+    .dark-mode .tab-underline {
+        background: var(--secondary-500);
+    }
+
+    /* Contenido de las secciones */
+    .profile-content {
+        padding: 2rem 1.5rem;
+    }
+
     .profile-section {
         display: none;
-        animation: fadeIn 0.5s ease;
+        animation: fadeIn 0.4s ease;
     }
-    
+
     .profile-section.active-section {
         display: block;
     }
-    
+
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
     }
-    
-    /* Items de contenido */
-    .security-item {
-        margin-bottom: 30px;
-        padding: 25px;
-        background: var(--panel-bg);
+
+    /* Tarjetas de sección */
+    .section-card {
+        background: var(--card-bg);
         border-radius: 8px;
-        border-left: 4px solid var(--primary);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    
-    .danger-section {
-        background-color: var(--danger-bg);
-        border-left: 4px solid var(--danger-border);
+
+    .section-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
-    
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header i {
+        font-size: 1.5rem;
+        color: var(--primary-500);
+    }
+
+    .dark-mode .section-header i {
+        color: var(--secondary-500);
+    }
+
+    .section-header h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--primary-700);
+        margin: 0;
+    }
+
+    .dark-mode .section-header h2 {
+        color: var(--secondary-500);
+    }
+
+    /* Tarjetas especiales */
+    .security-card {
+        border-left: 4px solid var(--primary-500);
+    }
+
+    .dark-mode .security-card {
+        border-left-color: var(--secondary-500);
+    }
+
+    .danger-card {
+        border-left: 4px solid var(--danger);
+        background-color: rgba(229, 62, 62, 0.05);
+    }
+
+    .dark-mode .danger-card {
+        background-color: rgba(229, 62, 62, 0.1);
+    }
+
+    /* Botones especiales */
+    .theme-toggle-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-icon {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: all 0.3s ease;
+    }
+
+    .theme-icon {
+        background-image: url("{{ asset('vendor/adminlte/dist/img/day.png') }}");
+    }
+
+    .dark-mode .theme-icon {
+        background-image: url("{{ asset('vendor/adminlte/dist/img/night.png') }}");
+    }
+
+    .logout-btn {
+        position: absolute;
+        bottom: -20px;
+        right: 20px;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--danger);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    .logout-btn:hover {
+        background-color: #c53030;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(229, 62, 62, 0.4);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
+        .profile-header {
+            padding: 1.5rem 0 3rem;
+        }
+        
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            font-size: 2.5rem;
+        }
+        
         .profile-header h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
         
-        .sidebar-btn {
-            padding: 8px 12px;
-            font-size: 0.9rem;
+        .profile-tabs {
+            overflow-x: auto;
+            padding: 0;
         }
         
-        .profile-card {
-            padding: 20px;
+        .profile-tab {
+            padding: 1rem;
+            font-size: 0.85rem;
         }
         
-        .security-item {
-            padding: 15px;
+        .profile-content {
+            padding: 1.5rem 1rem;
         }
-
-        #botonModoOscuro {
+        
+        .theme-toggle-btn {
             top: 15px;
             right: 15px;
+            width: 38px;
+            height: 38px;
+        }
+        
+        .logout-btn {
+            position: relative;
+            bottom: auto;
+            right: auto;
+            margin: 1.5rem auto 0;
+            display: inline-flex;
         }
     }
 </style>
@@ -274,21 +502,35 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Controlador de clicks para los botones del sidebar
-        document.querySelectorAll('.sidebar-btn:not(.logout-btn)').forEach(btn => {
-            btn.addEventListener('click', function() {
+        // Animación de las pestañas
+        const tabs = document.querySelectorAll('.profile-tab');
+        const underline = document.querySelector('.tab-underline');
+        const sections = document.querySelectorAll('.profile-section');
+        
+        // Inicializar subrayado
+        const activeTab = document.querySelector('.profile-tab.active');
+        if(activeTab) {
+            underline.style.width = `${activeTab.offsetWidth}px`;
+            underline.style.left = `${activeTab.offsetLeft}px`;
+        }
+        
+        // Controlador de clicks para las pestañas
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
                 const sectionId = this.getAttribute('data-section');
                 
-                // Remover clase active de todos los botones
-                document.querySelectorAll('.sidebar-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
+                // Remover clase active de todas las pestañas
+                tabs.forEach(t => t.classList.remove('active'));
                 
-                // Añadir clase active al botón clickeado
+                // Añadir clase active a la pestaña clickeada
                 this.classList.add('active');
                 
+                // Mover el subrayado
+                underline.style.width = `${this.offsetWidth}px`;
+                underline.style.left = `${this.offsetLeft}px`;
+                
                 // Ocultar todas las secciones
-                document.querySelectorAll('.profile-section').forEach(section => {
+                sections.forEach(section => {
                     section.classList.remove('active-section');
                 });
                 
@@ -296,27 +538,14 @@
                 const targetSection = document.getElementById(sectionId);
                 if(targetSection) {
                     targetSection.classList.add('active-section');
-                    
-                    // Scroll suave a la sección
-                    window.scrollTo({
-                        top: targetSection.offsetTop - 20,
-                        behavior: 'smooth'
-                    });
                 }
             });
         });
         
-        // Activar la primera sección por defecto
-        if(!document.querySelector('.profile-section.active-section')) {
-            const firstSection = document.querySelector('.profile-section');
-            if(firstSection) firstSection.classList.add('active-section');
-        }
-        
-        // Activar el primer botón por defecto
-        if(!document.querySelector('.sidebar-btn.active')) {
-            const firstBtn = document.querySelector('.sidebar-btn:not(.logout-btn)');
-            if(firstBtn) firstBtn.classList.add('active');
-        }
+        // Efecto de carga inicial
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 50);
     });
 
     // Función de confirmación para cerrar sesión
@@ -326,10 +555,12 @@
             text: "¿Estás seguro de que deseas salir de tu cuenta?",
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#2c5e1a',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: 'var(--danger)',
+            cancelButtonColor: 'var(--gray-500)',
             confirmButtonText: 'Sí, cerrar sesión',
-            cancelButtonText: 'Cancelar'
+            cancelButtonText: 'Cancelar',
+            background: 'var(--card-bg)',
+            color: 'var(--text-color)'
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('logout-form').submit();
@@ -343,23 +574,20 @@
         const modoOscuroActivado = document.body.classList.contains('dark-mode');
         localStorage.setItem('modoOscuro', modoOscuroActivado);
         
-        // Cambiar ícono según el modo
-        const icono = document.getElementById('iconoTema');
-        if (modoOscuroActivado) {
-            icono.src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
-            icono.style.transform = 'rotate(360deg)';
-        } else {
-            icono.src = "{{ asset('vendor/adminlte/dist/img/day.png') }}";
-            icono.style.transform = 'rotate(0deg)';
-        }
+        // Agregar efecto de transición
+        document.body.style.transition = 'all 0.3s ease';
     }
 
     // Verificar modo oscuro al cargar
     document.addEventListener('DOMContentLoaded', function() {
         if (localStorage.getItem('modoOscuro') === 'true') {
             document.body.classList.add('dark-mode');
-            document.getElementById('iconoTema').src = "{{ asset('vendor/adminlte/dist/img/night.png') }}";
         }
+        
+        // Agregar transición después de la carga
+        setTimeout(() => {
+            document.body.style.transition = 'all 0.3s ease';
+        }, 100);
     });
 </script>
 @endsection

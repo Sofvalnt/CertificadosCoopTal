@@ -73,6 +73,9 @@ class Kernel extends HttpKernel
         'force.password' => \App\Http\Middleware\ForcePasswordChange::class,
         'force.password.change' => ForcePasswordChange::class, // <-- Sin corchetes
         'check.role' => \App\Http\Middleware\CheckRole::class,
+
+
+'check.registro' => \App\Http\Middleware\CheckRegistro::class,
 ];
 }
 

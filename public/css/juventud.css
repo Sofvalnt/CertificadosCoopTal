@@ -1,0 +1,360 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --button-bg: #285430;
+    --button-hover: #112214;
+    --panel-bg: #bdf1c6;
+    --nombre-color: #000;
+    --secondary-color: rgb(34, 66, 40);
+    --tutor-color: #0d0e0d;
+    --diploma-bg: url('/vendor/adminlte/dist/img/juventud.png');
+
+}
+
+.dark-mode {
+    --bg-color: #ffffff;
+    --text-color: #333333;
+    --button-bg: #285430;
+    --button-hover: #112214;
+    --panel-bg: rgb(20, 29, 22);
+    --nombre-color: #000;
+    --secondary-color: #285430;
+    --tutor-color: #0d0e0d;
+    --diploma-bg: url('/vendor/adminlte/dist/img/juventud.png');
+
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-bottom: 100px;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+.instrucciones {
+    background-color: var(--panel-bg);
+    border-left: 4px solid var(--button-bg);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    transition: all 0.5s;
+}
+
+.destacado {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.contenedor-imagen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.marco-imagen {
+    border: 8px solid var(--panel-bg);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: var(--panel-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.marco-imagen:hover {
+    border-color: var(--button-bg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+.imagen-interactiva {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.marco-imagen:hover .imagen-interactiva {
+    transform: scale(1.05);
+}
+
+.pie-imagen {
+    text-align: center;
+    margin-top: 10px;
+    font-style: italic;
+    color: var(--text-color);
+}
+
+#botonDescargarTodos {
+    display: none;
+}
+
+.diploma {
+    background-image: var(--diploma-bg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 297mm;
+    height: 210mm;
+    margin: 20px auto;
+    position: relative;
+}
+
+.tipo-documento {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    color: var(--nombre-color);
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+}
+
+.nombre {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 45px;
+    text-align: center;
+    font-family: 'Vivaldi', sans-serif;
+    color: var(--nombre-color);
+}
+
+.curso {
+    position: absolute;
+    top: 31%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    text-align: center;
+    color: var(--nombre-color);
+}
+
+.modalidad {
+    position: absolute;
+    top: 56%;
+    left: 43%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    color: var(--secondary-color);
+}
+
+.duracion {
+    position: absolute;
+    top: 56%;
+    left: 73%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    color: var(--secondary-color);
+}
+
+.fecha-finalizacion {
+    position: absolute;
+    top: 62%;
+    left: 59%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: var(--secondary-color);
+}
+
+.fecha-emision {
+    position: absolute;
+    top: 66%;
+    left: 50%;
+    font-size: 25px;
+    color: var(--secondary-color);
+}
+
+.tutor {
+    position: absolute;
+    top: 80%;
+    left: 63%;
+    font-size: 25px;
+    color: var(--tutor-color);
+}
+
+.qr-code {
+    position: absolute;
+    top: 80%;
+    left: 3%;
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    background: white;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    filter: contrast(1.1);
+}
+
+.botones {
+    margin: 20px;
+    padding: 10px;
+    background: var(--panel-bg);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: all 0.5s;
+}
+
+.grupo-botones {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--button-bg);
+    width: 100%;
+    max-width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#contenedor {
+    margin-top: 20px;
+}
+
+.certificado-item {
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 15px;
+    background: var(--panel-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.btn-descargar {
+    padding: 10px 20px;
+    background: var(--button-bg);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 15px 0;
+    transition: all 0.3s;
+}
+
+.btn-descargar:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background: var(--panel-bg);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    color: var(--text-color);
+    max-width: 500px;
+    width: 90%;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-radius: 5px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.progress {
+    height: 20px;
+    background-color: var(--button-bg);
+    border-radius: 5px;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+@media (max-width: 768px) {
+    .marco-imagen {
+        max-width: 300px;
+        padding: 3px;
+    }
+    
+    .pie-imagen {
+        font-size: 0.8em;
+    }
+    
+    .botones {
+        padding: 10px;
+        margin: 10px;
+    }
+    
+    .grupo-botones {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .diploma {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 297/210;
+    }
+    
+    .nombre {
+        font-size: 24px;
+    }
+    
+    .curso {
+        font-size: 18px;
+    }
+    
+    .modalidad, .duracion, .fecha-finalizacion, .fecha-emision, .tutor {
+        font-size: 14px;
+    }
+    
+    .qr-code {
+        width: 60px;
+        height: 60px;
+        top: 85%;
+        left: 5%;
+    }
+}
