@@ -117,3 +117,16 @@ Route::get('/register', [RegistroController::class, 'registerForm'])
 Route::post('/register', [RegistroController::class, 'registerUser'])
     ->middleware('check.registro') // Aquí también se aplica el middleware
     ->name('register');
+    Route::get('/register', [RegistroController::class, 'registerForm'])->middleware('check.registro')->name('register');
+
+
+
+
+Route::get('/verificar-registro', [RegistroController::class, 'verificarForm'])->name('verificar-registro');
+Route::post('/verificar-registro', [RegistroController::class, 'verificarPassword'])->name('verificar-password');
+
+Route::get('/register', [RegistroController::class, 'registerForm'])
+    ->middleware('check.registro') // <--- Protegido aquí
+    ->name('register');
+
+    

@@ -1,3 +1,7 @@
+<?php
+session()->forget('clave_verificada');
+?>
+
 @extends('adminlte::auth.auth-page', ['authType' => 'login'])
 @push('css')
     <style>
@@ -107,5 +111,8 @@
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>
+
+        
+
     @endif
 @stop

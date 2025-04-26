@@ -1,3 +1,8 @@
+<?php
+session()->forget('clave_verificada');
+?>
+
+
 <?php $__env->startPush('css'); ?>
     <style>
         body.login-page {
@@ -138,6 +143,9 @@ unset($__errorArgs, $__bag); ?>
 
             </a>
         </p>
+
+        
+
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 
