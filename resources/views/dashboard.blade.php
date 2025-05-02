@@ -292,6 +292,7 @@
         <img src="{{ asset('vendor/adminlte/dist/img/AdminLTELogo.png') }}" alt="Logo Cooperativa Talanga" class="logo">
         <h1 class="saludo">Bienvenido a Cooperativa de Ahorro y Credito <span class="typing-effect">"Talanga" Limitada</span></h1>
         <p>Tu aliado financiero para un futuro más próspero. Juntos crecemos, juntos prosperamos.</p>
+        <a href="{{ asset('vendor/adminlte/dist/img/ManualdeUsuario.pdf') }}" class="btn" download>MANUAL DE USO</a>
         <a href="{{ url('generacion') }}" class="btn">DIPLOMAS</a>
         <a href="{{ url('generacionCertificados') }}" class="btn">CERTIFICADOS</a>
         

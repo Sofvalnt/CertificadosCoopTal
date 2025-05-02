@@ -354,7 +354,7 @@ return [
         
         [
             'text' => 'Ir a Classroom',
-            'url' => 'https://classroom.google.com/?pli=1',
+            'url' => 'https://edu.google.com/workspace-for-education/products/classroom/',
             'icon' => 'fas fa-fw fa-laptop',
             'target' => '_blank'
         ],

@@ -19,6 +19,12 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            
+            // Campos para control de primer login y cambio de contraseña
+            $table->boolean('is_first_login')->default(0)->comment('0=debe cambiar contraseña, 1=ya cambió');
+            $table->boolean('force_password_change')->default(0)->comment('1=requiere cambio forzado');
+            $table->timestamp('password_changed_at')->nullable()->comment('Fecha último cambio');
+            
             $table->timestamps();
         });
     }

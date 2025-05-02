@@ -1,8 +1,10 @@
 :root {
     --bg-color: #ffffff;
+    --text-color: #333333;
     --button-bg: #285430;
     --button-hover: #112214;
-    --panel-bg: #bdf1c6;;
+    --panel-bg: #bdf1c6;
+    
     --secondary-color: #285430;
     --tutor-color: #0d0e0d;
     --certificado-bg: url('../vendor/adminlte/dist/img/reconocimiento.png');
@@ -13,21 +15,23 @@
 
 .dark-mode {
     --bg-color: #1a1a1a;
+    --text-color: #000;
     --button-bg: #4a8c2a;
     --button-hover: #2c5e1a;
     --panel-bg: rgb(20, 29, 22);
-    --secondary-color: #f8c537;
-    --tutor-color: #f8f9fa;
+    
+    --secondary-color: #0c0c0c;
+    --tutor-color: #121213;
     --certificado-bg: url('../vendor/adminlte/dist/img/reconocimiento.png');
     --border-color: #444;
-    --highlight-color: #f8c537;
+    --highlight-color: #0f0f0f;
     --progress-bg: #f8c537;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--bg-color);
-    color: #000000;;
+    color: #000000;
     padding-bottom: 100px;
     transition: background-color 0.5s, color 0.5s;
 }
@@ -124,7 +128,7 @@ body {
     width: 70%;
     font-size: 20px;
     text-align: justify;
-    color: #000000;;
+    color: #000000;
 }
 
 .fecha-certificado {
@@ -172,7 +176,7 @@ body {
 input[type="file"] {
     margin: 10px 0;
     background: var(--bg-color);
-    color: #000000;
+    color: var(--text-color);
     padding: 8px;
     border-radius: 5px;
     border: 1px solid var(--button-bg);

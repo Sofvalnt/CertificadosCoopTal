@@ -7,31 +7,47 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Ejecuta las migraciones.
      */
     public function up(): void
     {
-        Schema::table('verificacions', function (Blueprint $table) {
-            $table->string('nombre_estudiante')
-                ->nullable()
-                ->after('id'); // Opcional: define posición de la columna
-            
-            $table->string('nombre_curso')
-                ->nullable()
-                ->comment('Nombre del curso asociado'); // Opcional: añade comentario
-        });
+        // Verifica primero si la tabla existe
+        if (Schema::hasTable('verificacions')) {
+            Schema::table('verificacions', function (Blueprint $table) {
+                // Añade nombre_estudiante solo si no existe
+                if (!Schema::hasColumn('verificacions', 'nombre_estudiante')) {
+                    $table->string('nombre_estudiante')
+                        ->nullable()
+                        ->after('id');
+                }
+
+                // Añade nombre_curso solo si no existe
+                if (!Schema::hasColumn('verificacions', 'nombre_curso')) {
+                    $table->string('nombre_curso')
+                        ->nullable()
+                        ->comment('Nombre del curso asociado');
+                }
+            });
+        }
     }
 
     /**
-     * Reverse the migrations.
+     * Revierte las migraciones.
      */
     public function down(): void
     {
-        Schema::table('verificacions', function (Blueprint $table) {
-            $table->dropColumn([
-                'nombre_estudiante',
-                'nombre_curso'
-            ]);
-        });
+        if (Schema::hasTable('verificacions')) {
+            Schema::table('verificacions', function (Blueprint $table) {
+                // Elimina las columnas solo si existen
+                $columnsToDrop = ['nombre_estudiante', 'nombre_curso'];
+                $existingColumns = Schema::getColumnListing('verificacions');
+                
+                $columnsToDrop = array_intersect($columnsToDrop, $existingColumns);
+                
+                if (!empty($columnsToDrop)) {
+                    $table->dropColumn($columnsToDrop);
+                }
+            });
+        }
     }
 };

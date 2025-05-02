@@ -13,7 +13,13 @@
 @section('auth_header', __('adminlte::adminlte.password_reset_message'))
 
 @section('auth_body')
-
+    <style>
+        body.login-page {
+            background: url('{{ asset('vendor/adminlte/dist/img/fondo.png') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+        
     @if(session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -72,4 +78,8 @@
         </button>
     </form>
 
+    {{-- Botón para volver al login --}}
+    <a href="{{ route('login') }}" class="btn btn-block btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver al Inicio de Sesión
+    </a>
 @stop

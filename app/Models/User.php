@@ -9,13 +9,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable // Se eliminó "implements MustVerifyEmail"
+class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -26,8 +22,10 @@ class User extends Authenticatable // Se eliminó "implements MustVerifyEmail"
         'name',
         'email',
         'password',
-        'force_password_change',
+        'current_team_id',
+        'profile_photo_path',
         'is_first_login',
+        'force_password_change',
         'password_changed_at'
     ];
 
@@ -49,9 +47,10 @@ class User extends Authenticatable // Se eliminó "implements MustVerifyEmail"
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime', // Elimina esta línea si quieres
-        'is_first_login' => 'boolean', // Añade esto para tu lógica de primer login
-        'password_changed_at' => 'datetime' // Añade esto si no está
+        'email_verified_at' => 'datetime',
+        'is_first_login' => 'boolean',
+        'force_password_change' => 'boolean',
+        'password_changed_at' => 'datetime'
     ];
 
     /**
@@ -63,14 +62,67 @@ class User extends Authenticatable // Se eliminó "implements MustVerifyEmail"
         'profile_photo_url',
     ];
 
-    public function adminlte_image()
+    /**
+     * Get the URL to the user's profile photo.
+     * Overrides default Jetstream implementation if needed
+     */
+    public function getProfilePhotoUrlAttribute()
     {
-        return url($this->profile_photo_url);
+        return $this->profile_photo_path
+            ? \Illuminate\Support\Facades\Storage::url($this->profile_photo_path)
+            : $this->defaultProfilePhotoUrl();
     }
 
+    /**
+     * AdminLTE integration - Profile image
+     */
+    public function adminlte_image()
+    {
+        return $this->profile_photo_url;
+    }
+
+    /**
+     * AdminLTE integration - Profile URL
+     */
     public function adminlte_profile_url()
     {
-        return url('User/Profile');
+        return route('profile.show');
     }
+
+    /**
+     * Determina si el usuario requiere cambio de contraseña
+     */
+    public function requiresPasswordChange(): bool
+    {
+        return $this->is_first_login === false || $this->force_password_change === true;
+    }
+
+    /**
+     * Marca al usuario como requerido para cambiar contraseña
+     */
+    public function requirePasswordChange(): void
+    {
+        $this->update([
+            'is_first_login' => false,
+            'force_password_change' => true
+        ]);
+    }
+
+    /**
+     * Registra el cambio de contraseña exitoso
+     */
+    public function passwordChanged(): void
+    {
+        $this->update([
+            'is_first_login' => true,
+            'force_password_change' => false,
+            'password_changed_at' => now()
+        ]);
+    }
+
+    public function passwordExpired()
+{
+    return $this->password_changed_at->diffInDays(now()) > 90;
+}
 
 }

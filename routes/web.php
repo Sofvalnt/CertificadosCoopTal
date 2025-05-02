@@ -129,4 +129,17 @@ Route::get('/register', [RegistroController::class, 'registerForm'])
     ->middleware('check.registro') // <--- Protegido aquí
     ->name('register');
 
-    
+    Route::get('/register', [RegistroController::class, 'registerForm'])->name('register');
+Route::post('/register', [RegistroController::class, 'registerUser'])->name('register.submit');
+
+Route::get('/firstlogin', [FirstLoginController::class, 'index'])->name('firstlogin');
+
+Route::get('/first-login', function () {
+    return view('auth.first-login');
+})->name('first-login');
+
+// Ruta para mostrar el formulario de cambio de contraseña obligatorio
+Route::get('/first-login', [FirstLoginController::class, 'showFirstLoginForm'])->name('first-login');
+
+// Ruta para procesar el cambio de contraseña
+Route::post('/first-login', [FirstLoginController::class, 'processFirstLogin'])->name('first.login.process');

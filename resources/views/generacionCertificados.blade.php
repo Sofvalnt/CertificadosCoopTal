@@ -2,7 +2,6 @@
 
 @section('title', 'Generador de certificados')
 
-
 @section('content')
 <div class="container-fluid">
     <!-- Botón de modo oscuro -->
@@ -112,6 +111,81 @@
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-    <script src="{{ asset('js/certificados.js') }}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const archivoCSV = document.getElementById("archivoCSV");
+        const nombreArchivo = document.getElementById("nombre-archivo");
+        const botonGenerar = document.getElementById("botonGenerar");
+        const botonDescargarTodos = document.getElementById("botonDescargarTodos");
+        const contenedorCertificados = document.getElementById("contenedor-certificados");
+
+        archivoCSV.addEventListener("change", function () {
+            if (archivoCSV.files.length > 0) {
+                nombreArchivo.textContent = archivoCSV.files[0].name;
+                botonGenerar.disabled = false;
+            }
+        });
+
+        botonGenerar.addEventListener("click", async function () {
+            const certificados = document.querySelectorAll(".certificado-individual");
+
+            if (certificados.length === 0) {
+                alert("No hay certificados para generar.");
+                return;
+            }
+
+            botonGenerar.disabled = true;
+            botonGenerar.textContent = "Generando ZIP...";
+
+            await generarZIP(Array.from(certificados));
+
+            botonGenerar.disabled = false;
+            botonGenerar.textContent = "Generar Certificados";
+            botonDescargarTodos.style.display = "inline-block";
+        });
+
+        async function generarZIP(certificadosDOM) {
+            const zip = new JSZip();
+            const folder = zip.folder("certificados");
+
+            const chunkSize = 10;
+            for (let i = 0; i < certificadosDOM.length; i += chunkSize) {
+                const chunk = certificadosDOM.slice(i, i + chunkSize);
+                await Promise.all(chunk.map(async (certDOM, index) => {
+                    const canvas = await html2canvas(certDOM, {
+                        scale: 1,
+                        useCORS: true,
+                    });
+
+                    return new Promise(resolve => {
+                        canvas.toBlob(blob => {
+                            const nombreArchivo = `certificado_${i + index + 1}.png`;
+                            folder.file(nombreArchivo, blob);
+                            resolve();
+                        });
+                    });
+                }));
+            }
+
+            zip.generateAsync({ type: "blob" })
+                .then(content => {
+                    saveAs(content, "certificados.zip");
+                })
+                .catch(error => {
+                    alert("Error al generar el archivo ZIP: " + error.message);
+                });
+        }
+
+        botonDescargarTodos.addEventListener("click", function () {
+            const certificados = document.querySelectorAll(".certificado-individual");
+            if (certificados.length > 0) {
+                generarZIP(Array.from(certificados));
+            } else {
+                alert("No hay certificados para descargar.");
+            }
+        });
+    });
+    </script>
 @stop

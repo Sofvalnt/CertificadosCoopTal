@@ -3,7 +3,7 @@
 @push('css')
 <style>
     body.login-page {
-        background: url('{{ asset('vendor/adminlte/dist/img/alerta.png') }}') no-repeat center center fixed;
+        background: url('{{ asset("vendor/adminlte/dist/img/alerta.png") }}') no-repeat center center fixed;
         background-size: cover;
     }
 
@@ -54,7 +54,6 @@
 @endpush
 
 @section('auth_header')
-    
     <div class="text-center auth-title">
         ACCESO RESTRINGIDO
     </div>
@@ -69,7 +68,7 @@
             <strong>Advertencia:</strong> Solo personal autorizado puede continuar. Este módulo es exclusivo para el departamento de IT o personas validadas.
         </div>
 
-        <form method="POST" action="{{ url('/verificar-registro') }}">
+        <form method="POST" action="{{ route('verificar-registro') }}">
             @csrf
 
             <div class="input-group mb-3">
@@ -94,7 +93,7 @@
             </button>
         </form>
     </div>
-@stop
+@endsection
 
 @section('auth_footer')
     <p class="my-2 text-center">
@@ -102,5 +101,4 @@
             ← Volver al inicio de sesión
         </a>
     </p>
-
-@stop
+@endsection

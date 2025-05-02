@@ -12,17 +12,14 @@ class ForcePasswordChange
     {
         $user = auth()->user();
 
-        if ($user) {
-            // Verifica si es primer login o si debe forzar cambio
-            if ($user->is_first_login == 1 || $user->force_password_change) {
-                // Rutas permitidas sin redirección
-                $allowedRoutes = ['first-login', 'logout', 'password.change.form', 'password.change'];
-                
-                if (!$request->is($allowedRoutes)) {
-                    return $user->is_first_login == 1 
-                        ? redirect()->route('first-login')
-                        : redirect()->route('password.change.form');
-                }
+        if ($user && ($user->is_first_login || $user->force_password_change)) {
+
+            // Usa los NOMBRES de las rutas
+            $allowedRouteNames = ['first-login', 'logout', 'password.change.form', 'password.change'];
+
+            // Si no es una de las rutas permitidas, redirige
+            if (!in_array($request->route()->getName(), $allowedRouteNames)) {
+                return redirect()->route('first-login');
             }
         }
 
